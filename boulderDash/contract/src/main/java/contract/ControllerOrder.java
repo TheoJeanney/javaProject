@@ -3,7 +3,7 @@ package contract;
 /**
  * The Enum ControllerOrder.
  *
- * @author Jean-Aymeric Diet
+ * @author Jean-Aymeric Die
  */
 public enum ControllerOrder {
 
