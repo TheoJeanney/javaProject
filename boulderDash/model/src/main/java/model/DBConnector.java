@@ -10,12 +10,11 @@ public class DBConnector {
 	
 	private String userDB = "root";
 	private String passDB="";
-	private String urlDB=""; //Put the URL of the DataBase.
+	private String urlDB=""; //@TODOPut the URL of the DataBase.
 	
 	private Connection connection;
 	private Statement statement;
 	private DBConnector instance;
-	
 	
 	public void DBConnector(){
 		
