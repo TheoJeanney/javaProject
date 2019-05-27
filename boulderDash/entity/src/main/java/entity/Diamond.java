@@ -1,10 +1,15 @@
 package entity;
 
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 public class Diamond extends Mobile {
 
-	private BufferedImage sprite ; //= Diamong.png , put the picture here and don't forget the FINAL.
+	public Diamond(Point position) {
+		super(position);
+		// TODO Auto-generated constructor stub
+	}
+	private BufferedImage sprite ; //@TODO= Diamong.png , put the picture here and don't forget the FINAL.
 	private final boolean heavy = true;
 	private final boolean breakable = true;
 	private final boolean collectable = true;

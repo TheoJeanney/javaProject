@@ -1,10 +1,15 @@
 package entity;
 
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 public class Boulder extends  Mobile {
 	
-	private BufferedImage sprite ;//= Boulder.png , put the picture here and don't forget the FINAL.
+	public Boulder(Point position) {
+		super(position);
+		// TODO Auto-generated constructor stub
+	}
+	private BufferedImage sprite ;//@TODO = Boulder.png , put the picture here and don't forget the FINAL.
 	private final boolean solid = true;
 	private final boolean heavy = true;
 	private final boolean explodable = true;

@@ -4,9 +4,8 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 /**
- * The Class Entity.
+ * @author Théo
  *
- * @author Jean-Aymeric Diet
  */
 public abstract class Entity {
 
@@ -20,16 +19,24 @@ public abstract class Entity {
 	private boolean explodable = false;
 	private boolean collectable = false;
 	
-	public Point getPosition() {
-		return null;
+	public Entity(Point position){
+		
+		setPosition(position);
+	
+		
 	}
 	
-	public void setPosition(Point position){
-		
+	public Point getPosition() {
+		return position;
+	}
+	
+	public void setPosition(Point newPosition){
+		this.position = newPosition;
 	}
 	
 	public void setPosition(Integer posX,Integer posY){
-		
+		this.position.x = posX;
+		this.position.y = posY;
 	}
 
 	
