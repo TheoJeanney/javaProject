@@ -2,6 +2,7 @@ package entity;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 
 /**
  * @author Théo
@@ -11,20 +12,20 @@ public abstract class Entity {
 
 	private BufferedImage sprite;
 	private Point position;
-	private boolean solid = false;
-	private boolean lethal = false;
-	private boolean heavy = false;
-	private boolean breakable = false;
-	private boolean crushable = false;
-	private boolean explodable = false;
-	private boolean collectable = false;
-	
+	HashMap<Attribute, Boolean> attributeSet = new HashMap<Attribute, Boolean>();
+
 	public Entity(Point position){
 		
 		setPosition(position);
-	
-		
+		setAttribute(Attribute.solid, false);
+		setAttribute(Attribute.lethal, false);
+		setAttribute(Attribute.heavy, false);
+		setAttribute(Attribute.breakable, false);
+		setAttribute(Attribute.crushable, false);
+		setAttribute(Attribute.explodable, false);
+		setAttribute(Attribute.collectable, false);
 	}
+	
 	
 	public Point getPosition() {
 		return position;
@@ -39,14 +40,20 @@ public abstract class Entity {
 		this.position.y = posY;
 	}
 	
-	public boolean getExplodable(){
-		 return explodable;	
+	public void setAttribute(Attribute choice, boolean confirmExplode){
+		
+		this.attributeSet.put(choice, confirmExplode);
 	}
-
+	
+	public boolean getAttribute(Attribute choice){
+		
+		return this.attributeSet.get(choice);
+	}
+	
 	public void setInvincible(){
-		this.crushable = false;
-		this.explodable = false;
-		this.breakable = false;
+		this.attributeSet.put(Attribute.crushable, false);
+		this.attributeSet.put(Attribute.explodable, false);
+		this.attributeSet.put(Attribute.breakable,false);
 	}
 	
 }

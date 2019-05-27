@@ -2,13 +2,11 @@ package entity;
 
 import java.awt.Point;
 
-public class Ennemy extends Mobile {
+public class Enemy extends Mobile {
 	
-	public Ennemy(Point position) {
+	public Enemy(Point position) {
 		super(position);
+		setAttribute(Attribute.martyrdom,false);
 		// TODO Auto-generated constructor stub
 	}
-
-	private boolean martyrdom = false;
-
 }
