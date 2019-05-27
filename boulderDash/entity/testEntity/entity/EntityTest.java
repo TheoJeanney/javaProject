@@ -30,6 +30,7 @@ public class EntityTest {
 
 	@Before
 	public void setUp() throws Exception {
+		this.entity = new Wall(testPoint);
 	}
 
 	@After
@@ -42,24 +43,19 @@ public class EntityTest {
 		final double expectedX = 1.0;
 		final double expectedY = 1.0;
 		
-		final Entity entity = new Wall(testPoint);
-		System.out.println("x : ");
-		System.out.println("x : " + entity.getPosition().getX());
 		assertEquals(expectedX,entity.getPosition().getX(),0);
+		assertEquals(expectedY, entity.getPosition().getY(),0);
 		
 	}
-
+	
 	@Test
-	public void testSetPositionPoint() {
-		final Point position= new Point(1,1);
+	public void testGetExplosable(){
 		
+		final boolean expected = true;
+		
+		System.out.println("Explodable : " + entity.getExplodable());
+		assertEquals(expected,entity.getExplodable());
 		
 		
 	}
-
-	@Test
-	public void testSetPositionIntegerInteger() {
-		//fail("Not yet implemented");
-	}
-
 }

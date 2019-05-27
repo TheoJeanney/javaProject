@@ -38,6 +38,15 @@ public abstract class Entity {
 		this.position.x = posX;
 		this.position.y = posY;
 	}
+	
+	public boolean getExplodable(){
+		 return explodable;	
+	}
 
+	public void setInvincible(){
+		this.crushable = false;
+		this.explodable = false;
+		this.breakable = false;
+	}
 	
 }
