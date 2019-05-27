@@ -4,9 +4,8 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 /**
- * The Class Entity.
+ * @author Théo
  *
- * @author Jean-Aymeric Diet
  */
 public abstract class Entity {
 
