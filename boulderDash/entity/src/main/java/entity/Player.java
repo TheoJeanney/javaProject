@@ -23,12 +23,6 @@ public class Player extends Mobile {
 		// TODO Auto-generated constructor stub
 	}
 	private BufferedImage sprite ; //@TODO= Rockford.png , put there the picture and don't forget the FINAL.Do we need to put it into constructor???
-
-<<<<<<< HEAD
->>>>>>> ec97a75... Entity :D
-	
-=======
->>>>>>> theo
 	
 	
 }

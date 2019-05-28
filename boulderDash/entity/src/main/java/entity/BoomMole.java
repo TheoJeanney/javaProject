@@ -18,8 +18,4 @@ public class BoomMole extends Mole {
 		setAttribute(Attribute.martyrdom,true);
 		// TODO Auto-generated constructor stub
 	}
-<<<<<<< HEAD
->>>>>>> ec97a75... Entity :D
-=======
->>>>>>> theo
 }

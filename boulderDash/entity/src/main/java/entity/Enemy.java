@@ -7,10 +7,6 @@ package entity;
 
 import java.awt.Point;
 
-=======
-=======
->>>>>>> theo
-import java.awt.Point;
 
 public class Enemy extends Mobile {
 	
@@ -25,8 +21,4 @@ public class Enemy extends Mobile {
 		setAttribute(Attribute.martyrdom,false);
 		// TODO Auto-generated constructor stub
 	}
-<<<<<<< HEAD
->>>>>>> ec97a75... Entity :D:boulderDash/entity/src/main/java/entity/Enemy.java
-=======
->>>>>>> theo
 }

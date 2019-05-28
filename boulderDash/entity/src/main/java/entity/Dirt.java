@@ -24,9 +24,5 @@ public class Dirt extends Static {
 		// TODO Auto-generated constructor stub
 	}
 	private BufferedImage sprite ; //@TODO=Dirt.png, put the picture here and put the FINAL.Do we need to put it into constructor???
-<<<<<<< HEAD
->>>>>>> ec97a75... Entity :D
-=======
->>>>>>> theo
 
 }
