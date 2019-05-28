@@ -13,15 +13,6 @@ public abstract class Entity {
 
 	private BufferedImage sprite;
 	private Point position;
-<<<<<<< HEAD
-	private boolean solid = false;
-	private boolean lethal = false;
-	private boolean heavy = false;
-	private boolean breakable = false;
-	private boolean crushable = false;
-	private boolean explodable = false;
-	private boolean collectable = false;
-=======
 	HashMap<Attribute, Boolean> attributeSet = new HashMap<Attribute, Boolean>();
 
 	public Entity(Point position){
@@ -36,7 +27,6 @@ public abstract class Entity {
 		setAttribute(Attribute.collectable, false);
 	}
 	
->>>>>>> ec97a75... Entity :D
 	
 	public Point getPosition() {
 		return null;
@@ -47,11 +37,6 @@ public abstract class Entity {
 	}
 	
 	public void setPosition(Integer posX,Integer posY){
-<<<<<<< HEAD
-		
-	}
-
-=======
 		this.position.x = posX;
 		this.position.y = posY;
 	}
@@ -71,6 +56,5 @@ public abstract class Entity {
 		this.attributeSet.put(Attribute.explodable, false);
 		this.attributeSet.put(Attribute.breakable,false);
 	}
->>>>>>> ec97a75... Entity :D
 	
 }
