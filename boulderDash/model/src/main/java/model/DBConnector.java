@@ -2,69 +2,96 @@ package model;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 
 public class DBConnector {
 	
-	private String userDB = "root";
-	private String passDB="";
-	private String urlDB=""; //@TODOPut the URL of the DataBase.
+	private static String userDB = "root";
+	private static String passDB="";
+	private static String urlDB="jdbc:mysql://localhost:3306/boulderDash"; //@TODOPut the URL of the DataBase.
 	
 	private Connection connection;
 	private Statement statement;
-	private DBConnector instance;
+	private static DBConnector instance;
 	
 	public void DBConnector(){
-		
+		this.isOpen();
 	}
 	
 	public boolean isOpen(){
-		
-		return true;
+		try {
+			
+			this.connection = DriverManager.getConnection(DBConnector.urlDB,DBConnector.userDB,DBConnector.passDB);
+			this.statement = this.connection.createStatement();
+			return true;
+			
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return false;
 		
 	}
 	
 	public static void setInstance(DBConnector instance){
-		
+		DBConnector.instance = instance;
 	}
 	
 	public static DBConnector getInstance(){
-		return null;
+		return DBConnector.instance;
 		
 	}
 	
-	public void setConnection(Connection connection){
+	public void setConnection(Connection connection) {
+		this.connection = connection;
 		
 	}
 	
 	
 	public Connection getConnection(){
-		return null;
+		
+		return this.connection;
 	}
 	
 	public void setStatement(Statement statement){
-		
+		this.statement = statement;
 	}
 	
 	public Statement getStatement(){
-		return null;
+		return this.statement;
 	}
 	
 	public ResultSet executeQuery (String query){
+		try {
+			return this.getStatement().executeQuery(query);
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
 		return null;
 	}
 	
 	public Integer executeUpdate(String query){
-		return 0;
+		try {
+            return this.statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+        } catch (final SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
 	}
 	
 	
 	public CallableStatement prepareCall(String query){
-		return null;
+		try {
+            return this.getConnection().prepareCall(query);
+        } catch (final SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
 	}
-	
-
 
 }
