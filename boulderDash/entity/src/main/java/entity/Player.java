@@ -5,6 +5,12 @@ import java.awt.image.BufferedImage;
 
 public class Player extends Mobile {
 
+	/**
+     * Constructor with all informations
+     *
+     * @param position , position of the object.
+     *          
+     */
 	public Player(Point position) {
 		super(position);
 		setAttribute(Attribute.crushable,true);

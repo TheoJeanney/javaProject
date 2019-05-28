@@ -5,6 +5,12 @@ import java.awt.image.BufferedImage;
 
 public class Mole extends Enemy {
 	
+	/**
+     * Constructor with all informations
+     *
+     * @param position , position of the object.
+     *          
+     */
 	public Mole(Point position) {
 		super(position);
 		setAttribute(Attribute.lethal,true);

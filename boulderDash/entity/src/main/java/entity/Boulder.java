@@ -5,6 +5,12 @@ import java.awt.image.BufferedImage;
 
 public class Boulder extends  Mobile {
 	
+	/**
+     * Constructor with all informations
+     *
+     * @param position , position of the object.
+     *          
+     */
 	public Boulder(Point position) {
 		super(position);
 		setAttribute(Attribute.solid,true);
