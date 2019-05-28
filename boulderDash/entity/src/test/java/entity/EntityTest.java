@@ -33,7 +33,6 @@ public class EntityTest {
 	public void tearDown() throws Exception {
 	}
 
-
 	@Test
 	public void testGetPosition() {
 		final double expectedX = 1.0;
