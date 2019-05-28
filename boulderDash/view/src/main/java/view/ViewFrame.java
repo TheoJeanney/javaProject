@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Font;
 import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
@@ -7,6 +8,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.border.TitledBorder;
 
 import contract.IController;
 import contract.IModel;
@@ -14,15 +16,16 @@ import contract.IModel;
 /**
  * The Class ViewFrame.
  *
- * @author Jean-Aymeric Diet
+ * @author joana
+ * 
  */
 class ViewFrame extends JFrame implements KeyListener {
 
 	/** The model. */
-	private IModel						model;
+	private IModel model;
 
 	/** The controller. */
-	private IController				controller;
+	private IController	controller;
 	/** The Constant serialVersionUID. */
 	private static final long	serialVersionUID	= -697358409737458175L;
 
@@ -127,11 +130,19 @@ class ViewFrame extends JFrame implements KeyListener {
 	 */
 	private void buildViewFrame(final IModel model) {
 		this.setModel(model);
+		/*close the frame with the cross*/
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		/*title of the frame (Bold and Italic)*/
+		TitledBorder border = new TitledBorder("Boulder Dash");
+		border.setTitleFont( border.getTitleFont().deriveFont(Font.BOLD + Font.ITALIC) );
+		/*not resizable*/
 		this.setResizable(false);
 		this.addKeyListener(this);
+		/*content of the Frame with ViewPanel*/
 		this.setContentPane(new ViewPanel(this));
-		this.setSize(400 + this.getInsets().left + this.getInsets().right, 60 + this.getInsets().top + this.getInsets().bottom);
+		/*Dimensions of the frame*/
+		this.setSize(300+ this.getInsets().left + this.getInsets().right, 190 + this.getInsets().top + this.getInsets().bottom);
+		/*Window should be placed where we want*/
 		this.setLocationRelativeTo(null);
 	}
 
