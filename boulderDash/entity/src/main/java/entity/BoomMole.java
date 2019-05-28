@@ -1,10 +1,20 @@
 package entity;
 
-/**
-* @author Théo
-*
-*/
 import java.awt.Point;
+
+/**
+ * <h1>BoomMole Class </h1>
+ * Enemies and its function.
+ * <p>
+ * We will use this class to check what the boomMole is able to do.
+ * <p>
+ * 
+* @author Théo
+* @version 9.2
+* @since 0.9.0
+*/
+
+
 
 public class BoomMole extends Mole {
 	/**

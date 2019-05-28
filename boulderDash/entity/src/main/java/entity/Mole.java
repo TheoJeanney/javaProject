@@ -1,12 +1,21 @@
 package entity;
 
-/**
-* @author Théo
-*
-*/
-
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+
+/**
+ * <h1>Enemy Class</h1>
+ * One of our enemy.
+ * <p>
+ * This enemy wont be able to explode.
+ * <p>
+ * 
+* @author Théo
+* @version 9.2
+* @since 0.9.0
+*/
+
+
 
 public class Mole extends Enemy {
 	

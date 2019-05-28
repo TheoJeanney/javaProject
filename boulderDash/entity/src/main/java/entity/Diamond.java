@@ -1,12 +1,20 @@
 package entity;
 
-/**
-* @author Théo
-*
-*/
-
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+
+/**
+ * <h1>Diamond Class </h1>
+ * Diamond and its function.
+ * <p>
+ * We will use this function to permit the player to collect this type.
+ * <p>
+ * 
+* @author Théo
+* @version 9.2
+* @since 0.9.0
+*/
+
 
 public class Diamond extends Mobile {
 

@@ -1,13 +1,22 @@
 package entity;
 
-/**
-* @author Théo
-*
-*/
-
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
+
+/**
+ * <h1>Entity Class</h1>
+ * The class for entity and the methods.
+ * <p>
+ * This class is using to initialize our attributes. Then there are methods to get the private attributes of this class.
+ * <p>
+ * 
+* @author Théo
+* @version 9.2
+* @since 0.9.0
+*/
+
+
 
 public abstract class Entity {
 

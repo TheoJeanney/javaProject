@@ -1,13 +1,20 @@
 package entity;
 
-
-/**
-* @author Théo
-*
-*/
-
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+
+
+/**
+ * <h1>Boulder Class </h1>
+ * Boulder and its function.
+ * <p>
+ * we will use this class to check what can do the boulder.
+ * <p>
+ * 
+* @author Théo
+* @version 9.2
+* @since 0.9.0
+*/
 
 public class Boulder extends  Mobile {
 	
