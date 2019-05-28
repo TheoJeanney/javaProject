@@ -10,10 +10,19 @@ import contract.IModel;
 import contract.IView;
 
 /**
- * The Class View.
+ * <h1>The Class View.</h1>
  *
- * @author Jean-Aymeric Diet
+ * The View and it's function.
+ * <p>
+ * This class is used to call each function to make our game windows.
+ * <p>
+ * 
+ * @author joana
+ * 
+ * @version 9.2
+ * @since 0.9.0
  */
+
 public final class View implements IView, Runnable {
 
 	/** The frame. */
@@ -23,10 +32,10 @@ public final class View implements IView, Runnable {
 	 * Instantiates a new view.
 	 *
 	 * @param model
-	 *          the model
+	 * 
 	 */
-	public View() {
-		this.viewFrame = new ViewFrame();
+	public View(final IModel model) {
+		this.viewFrame = new ViewFrame(model);
 		SwingUtilities.invokeLater(this);
 	}
 
@@ -34,7 +43,7 @@ public final class View implements IView, Runnable {
 	 * Key code to controller order.
 	 *
 	 * @param keyCode
-	 *          the key code
+	 * 
 	 * @return the controller order
 	 */
 	protected static ControllerOrder keyCodeToControllerOrder(final int keyCode) {

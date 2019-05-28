@@ -1,7 +1,5 @@
 package view;
 
-import java.awt.Font;
-import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -44,60 +42,17 @@ import contract.IModel;
 	 * @throws HeadlessException
 	 *           the headless exception
 	 */
-	public ViewFrame() throws HeadlessException {
+	public ViewFrame(final IModel model) throws HeadlessException {
 		super();
-		this.buildViewFrame();
-	}
-
-	/**
-	 * Instantiates a new view frame.
-	 *
-	 * @param model
-	 *          the model
-	 * @param gc
-	 *          the gc
-	 */
-/*	public ViewFrame(final IModel model, final GraphicsConfiguration gc) {
-		super(gc);
 		this.buildViewFrame(model);
 	}
 
-	/**
-	 * Instantiates a new view frame.
-	 *
-	 * @param model
-	 *          the model
-	 * @param title
-	 *          the title
-	 * @throws HeadlessException
-	 *           the headless exception
-	 */
-/*	public ViewFrame(final IModel model, final String title) throws HeadlessException {
-		super(title);
-		this.buildViewFrame(model);
-	}
-
-	/**
-	 * Instantiates a new view frame.
-	 *
-	 * @param model
-	 *          the model
-	 * @param title
-	 *          the title
-	 * @param gc
-	 *          the gc
-	 */
-/*	public ViewFrame(final IModel model, final String title, final GraphicsConfiguration gc) {
-		super(title, gc);
-		this.buildViewFrame(model);
-	}
-*/
 	/**
 	 * Gets the controller.
 	 *
 	 * @return the controller
 	 */
-/*	private IController getController() {
+	private IController getController() {
 		return this.controller;
 	}
 
@@ -107,7 +62,7 @@ import contract.IModel;
 	 * @param controller
 	 *          the new controller
 	 */
-/*	protected void setController(final IController controller) {
+	protected void setController(final IController controller) {
 		this.controller = controller;
 	}
 
@@ -116,7 +71,7 @@ import contract.IModel;
 	 *
 	 * @return the model
 	 */
-/*	protected IModel getModel() {
+	protected IModel getModel() {
 		return this.model;
 	}
 
@@ -126,7 +81,7 @@ import contract.IModel;
 	 * @param model
 	 *          the new model
 	 */
-/*	private void setModel(final IModel model) {
+	private void setModel(final IModel model) {
 		this.model = model;
 	}
 
@@ -134,22 +89,21 @@ import contract.IModel;
 	 * Builds the view frame.
 	 *
 	 * @param model
-	 *          the model
+	 * 
 	 */
-	private void buildViewFrame() {
-		//this.setModel(model);
+	private void buildViewFrame(final IModel model) {
+		this.setModel(model);
 		/*close the frame with the cross*/
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		/*title of the frame (Bold and Italic)*/
-		TitledBorder border = new TitledBorder("Boulder Dash");
-		border.setTitleFont( border.getTitleFont().deriveFont(Font.BOLD + Font.ITALIC) );
+		this.setTitle("Boulder Dash");
 		/*not resizable*/
 		this.setResizable(false);
 		this.addKeyListener(this);
 		/*content of the Frame with ViewPanel*/
-		//this.setContentPane(new ViewPanel(this));
+		this.setContentPane(new ViewPanel(this));
 		/*Dimensions of the frame*/
-		this.setSize(300+ this.getInsets().left + this.getInsets().right, 190 + this.getInsets().top + this.getInsets().bottom);
+		this.setSize(400+ this.getInsets().left + this.getInsets().right, 290 + this.getInsets().top + this.getInsets().bottom);
 		/*Window should be placed where we want*/
 		this.setLocationRelativeTo(null);
 	}
@@ -158,7 +112,7 @@ import contract.IModel;
 	 * Prints the message.
 	 *
 	 * @param message
-	 *          the message
+	 * 
 	 */
 	public void printMessage(final String message) {
 		JOptionPane.showMessageDialog(null, message);
@@ -173,7 +127,7 @@ import contract.IModel;
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+		this.getController().orderPerform(View.keyCodeToControllerOrder(e.getKeyCode()));
 	}
 
 	@Override
@@ -181,31 +135,4 @@ import contract.IModel;
 		// TODO Auto-generated method stub
 		
 	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
-	 */
-/*	public void keyTyped(final KeyEvent e) {
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
-	 */
-/*	public void keyPressed(final KeyEvent e) {
-		this.getController().orderPerform(View.keyCodeToControllerOrder(e.getKeyCode()));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
-	 */
-/*	public void keyReleased(final KeyEvent e) {
-
-	}*/
 }
