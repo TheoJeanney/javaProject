@@ -21,9 +21,9 @@ public class Wall extends Static {
      * @param position , position of the object.
      *          
      */
-	public Wall(Point position)
+	public Wall(int posX, int posY)
 	{
-		super(position);
+		super(posX, posY);
 		setAttribute(Attribute.explodable, true);
 		setAttribute(Attribute.solid,true);
 		setAttribute(Attribute.rolling, true);

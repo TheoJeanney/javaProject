@@ -21,9 +21,9 @@ public abstract class Entity {
      * @param position , position of the object.
      *          
      */
-	public Entity(Point position){
+	public Entity(int posX, int posY){
 		
-		setPosition(position);
+		setPosition(posX, posY);
 		setAttribute(Attribute.solid, false);
 		setAttribute(Attribute.lethal, false);
 		setAttribute(Attribute.heavy, false);

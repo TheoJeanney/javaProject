@@ -16,8 +16,8 @@ public class Dirt extends Static {
      * @param position , position of the object.
      *          
      */
-	public Dirt(Point position) {
-		super(position);
+	public Dirt(int posX, int posY) {
+		super(posX, posY);
 		setAttribute(Attribute.breakable, true);
 		setAttribute(Attribute.explodable, true);
 		setAttribute(Attribute.solid, true);

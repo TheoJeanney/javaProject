@@ -15,8 +15,8 @@ public class Static extends Entity {
      * @param position , position of the object.
      *          
      */
-	public Static(Point position) {
-		super(position);
+	public Static(int posX, int posY) {
+		super(posX, posY);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -13,8 +13,8 @@ public class BoomMole extends Mole {
      * @param position , position of the object.
      *          
      */
-	public BoomMole(Point position) {
-		super(position);
+	public BoomMole(int posX, int posY) {
+		super(posX, posY);
 		setAttribute(Attribute.martyrdom,true);
 		// TODO Auto-generated constructor stub
 	}

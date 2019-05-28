@@ -15,10 +15,11 @@ public class Exit extends Static {
      * @param position , position of the object.
      *          
      */
-	public Exit(Point position) {
-		super(position);
+	public Exit(int posX, int posY) {
+		super(posX, posY);
 		setAttribute(Attribute.collectable, true);
 		setAttribute(Attribute.breakable, true);
+		setAttribute(Attribute.solid, true);
 		// @TODO Auto-generated constructor stub
 	}
 

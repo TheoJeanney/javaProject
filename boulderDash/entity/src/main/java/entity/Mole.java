@@ -16,8 +16,8 @@ public class Mole extends Enemy {
      * @param position , position of the object.
      *          
      */
-	public Mole(Point position) {
-		super(position);
+	public Mole(int posX, int posY) {
+		super(posX, posY);
 		setAttribute(Attribute.lethal,true);
 		setAttribute(Attribute.breakable,true);
 		setAttribute(Attribute.crushable,true);

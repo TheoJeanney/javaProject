@@ -16,8 +16,8 @@ public class Diamond extends Mobile {
      * @param position , position of the object.
      *          
      */
-	public Diamond(Point position) {
-		super(position);
+	public Diamond(int posX, int posY) {
+		super(posX, posY);
 		setAttribute(Attribute.heavy,true);
 		setAttribute(Attribute.breakable,true);
 		setAttribute(Attribute.collectable,true);

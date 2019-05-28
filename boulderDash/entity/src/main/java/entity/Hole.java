@@ -16,8 +16,8 @@ public class Hole extends Static {
      * @param position , position of the object.
      *          
      */
-	public Hole(Point position) {
-		super(position);
+	public Hole(int posX, int posY) {
+		super(posX, posY);
 		// TODO Auto-generated constructor stub
 	}
 	

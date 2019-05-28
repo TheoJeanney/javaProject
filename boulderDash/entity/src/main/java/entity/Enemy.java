@@ -16,8 +16,8 @@ public class Enemy extends Mobile {
      * @param position , position of the object.
      *          
      */
-	public Enemy(Point position) {
-		super(position);
+	public Enemy(int posX, int posY) {
+		super(posX, posY);
 		setAttribute(Attribute.martyrdom,false);
 		// TODO Auto-generated constructor stub
 	}

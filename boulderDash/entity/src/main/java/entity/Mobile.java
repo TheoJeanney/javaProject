@@ -15,8 +15,8 @@ public class Mobile extends Entity {
      * @param position , position of the object.
      *          
      */
-	public Mobile(Point position) {
-		super(position);
+	public Mobile(int posX, int posY) {
+		super(posX, posY);
 		setAttribute(Attribute.rolling,false);
 		setAttribute(Attribute.falling,false);
 		// TODO Auto-generated constructor stub

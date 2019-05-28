@@ -16,8 +16,8 @@ public class Player extends Mobile {
      * @param position , position of the object.
      *          
      */
-	public Player(Point position) {
-		super(position);
+	public Player(int posX, int posY) {
+		super(posX, posY);
 		setAttribute(Attribute.crushable,true);
 		setAttribute(Attribute.explodable,true);
 		// TODO Auto-generated constructor stub

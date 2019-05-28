@@ -17,8 +17,8 @@ public class Boulder extends  Mobile {
      * @param position , position of the object.
      *          
      */
-	public Boulder(Point position) {
-		super(position);
+	public Boulder(int posX, int posY) {
+		super(posX, posY);
 		setAttribute(Attribute.solid,true);
 		setAttribute(Attribute.heavy,true);
 		setAttribute(Attribute.explodable,true);
