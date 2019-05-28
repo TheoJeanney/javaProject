@@ -6,7 +6,6 @@ package main;
 
 import contract.ControllerOrder;
 import controller.ControllerGame;
-import model.Model;
 import view.View;
 
 /**
@@ -22,13 +21,5 @@ public abstract class Main {
      * @param args
      *            the arguments
      */
-    public static void main(final String[] args) {
-        final Model model = new Model();
-        final View view = new View(model);
-        final ControllerGame controller = new ControllerGame(view, model);
-        view.setController(controller);
 
-        controller.control();
-        controller.orderPerform(ControllerOrder.English);
-    }
 }

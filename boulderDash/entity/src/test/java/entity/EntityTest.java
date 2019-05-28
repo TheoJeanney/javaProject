@@ -47,6 +47,7 @@ public class EntityTest {
 		
 	}
 
+	@SuppressWarnings("null")
 	@Test
 	public void testGetAttribute() {
 		final boolean expected = true;
