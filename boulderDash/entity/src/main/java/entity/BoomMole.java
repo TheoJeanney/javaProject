@@ -3,6 +3,7 @@ package entity;
 import java.awt.Point;
 
 public class BoomMole extends Mole {
+<<<<<<< HEAD
 	
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -11,6 +12,14 @@ public class BoomMole extends Mole {
 =======
 =======
 >>>>>>> theo
+=======
+	/**
+     * Constructor with all informations
+     *
+     * @param position , position of the object.
+     *          
+     */
+>>>>>>> 5b94aef... javaDocs entity
 	public BoomMole(Point position) {
 		super(position);
 		setAttribute(Attribute.martyrdom,true);

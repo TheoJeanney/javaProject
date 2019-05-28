@@ -5,6 +5,12 @@ import java.awt.image.BufferedImage;
 
 public class Diamond extends Mobile {
 
+	/**
+     * Constructor with all informations
+     *
+     * @param position , position of the object.
+     *          
+     */
 	public Diamond(Point position) {
 		super(position);
 		setAttribute(Attribute.heavy,true);

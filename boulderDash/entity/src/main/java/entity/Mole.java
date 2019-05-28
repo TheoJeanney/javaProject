@@ -7,6 +7,7 @@ public class Mole extends Enemy {
 <<<<<<< HEAD
 	
 <<<<<<< HEAD
+<<<<<<< HEAD
 	private BufferedImage sprite ; //=BoomMole.png , put the picture here, and don't forget the FINAL.
 	private final boolean lethal = true;
 	private final boolean breakable = true;
@@ -19,6 +20,14 @@ public class Mole extends Enemy {
 =======
 	
 >>>>>>> theo
+=======
+	/**
+     * Constructor with all informations
+     *
+     * @param position , position of the object.
+     *          
+     */
+>>>>>>> 5b94aef... javaDocs entity
 	public Mole(Point position) {
 		super(position);
 		setAttribute(Attribute.lethal,true);
