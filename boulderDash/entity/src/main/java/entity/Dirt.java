@@ -3,6 +3,20 @@ package entity;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
+
+
+/**
+ * <h1>Dirt Class</h1>
+ * Dirt and its function.
+ * <p>
+ * We will use this class to build our map.
+ * <p>
+ * 
+* @author Théo
+* @version 9.2
+* @since 0.9.0
+*/
+
 public class Dirt extends Static {
 	
 	public Dirt(Point position) {

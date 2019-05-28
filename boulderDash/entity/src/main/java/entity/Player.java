@@ -3,6 +3,19 @@ package entity;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
+
+/**
+ * <h1>Player Class</h1>
+ * The class of the player.
+ * <p>
+ * This is what the player can do.
+ * <p>
+ * 
+* @author Théo
+* @version 9.2
+* @since 0.9.0
+*/
+
 public class Player extends Mobile {
 
 	public Player(Point position) {

@@ -7,10 +7,16 @@ import java.util.Observer;
 import javax.swing.JPanel;
 
 /**
- * The Class ViewPanel.
- *
- * @author Jean-Aymeric Diet
- */
+ * <h1>View Class</h1>
+ * The View of the game.
+ * <p>
+ * This class is the object that is used to quit the game.
+ * <p>
+ * 
+* @author joana
+* @version 9.2
+* @since 0.9.0
+*/
 class ViewPanel extends JPanel implements Observer {
 
 	/** The view frame. */

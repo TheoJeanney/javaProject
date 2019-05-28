@@ -18,7 +18,7 @@ import contract.IModel;
  *
  * The frame and it's function.
  * <p>
- * This object is used to do the outline of our map.
+ * This class is used to do the windows of our game.
  * <p>
  * 
  * @author joana
