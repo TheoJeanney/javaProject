@@ -10,15 +10,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-/**
- * @author Théo
- *
- */
-
 public class EntityTest {
 	
 	private Entity entity;
-	private Point testPoint = new Point(1,1);
+	private Point testPoint = new Point (1,1);
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -30,36 +25,38 @@ public class EntityTest {
 
 	@Before
 	public void setUp() throws Exception {
+		this.entity.setPosition(testPoint);
+		this.entity.attributeSet.put(Attribute.breakable, true);
 	}
 
 	@After
 	public void tearDown() throws Exception {
 	}
 
-	@SuppressWarnings("deprecation")
+
 	@Test
 	public void testGetPosition() {
 		final double expectedX = 1.0;
 		final double expectedY = 1.0;
 		
-		final Entity entity = new Wall(testPoint);
-		System.out.println("x : ");
 		System.out.println("x : " + entity.getPosition().getX());
+		System.out.println("y : " + entity.getPosition().getY());
+		
 		assertEquals(expectedX,entity.getPosition().getX(),0);
+		assertEquals(expectedY, entity.getPosition().getY(),0);
 		
 	}
 
+	@SuppressWarnings("null")
 	@Test
-	public void testSetPositionPoint() {
-		final Point position= new Point(1,1);
+	public void testGetAttribute() {
+		final boolean expected = true;
+		final Entity entity = null;
 		
-		
+		System.out.println("test : "+ entity.getAttribute(Attribute.breakable));
+		assertEquals(expected, entity.getAttribute(Attribute.breakable));
 		
 	}
 
-	@Test
-	public void testSetPositionIntegerInteger() {
-		//fail("Not yet implemented");
-	}
 
 }

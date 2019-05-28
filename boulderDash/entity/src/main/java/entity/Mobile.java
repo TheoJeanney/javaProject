@@ -6,9 +6,9 @@ public class Mobile extends Entity {
 	
 	public Mobile(Point position) {
 		super(position);
+		setAttribute(Attribute.rolling,false);
+		setAttribute(Attribute.falling,false);
 		// TODO Auto-generated constructor stub
 	}
-	private boolean rolling = false;
-	private boolean falling = false;
 
 }
