@@ -6,24 +6,41 @@ package entity;
 */
 
 import java.awt.Point;
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 public abstract class Entity {
 
-	private BufferedImage sprite;
 	private Point position;
 	HashMap<Attribute, Boolean> attributeSet = new HashMap<Attribute, Boolean>();
 
 	/**
      * Constructor with all informations
      *
-     * @param position , position of the object.
+     * @param posX entity X position
+     * @param posY entity Y position
      *          
      */
 	public Entity(int posX, int posY){
 		
 		setPosition(posX, posY);
+		setAttribute(Attribute.solid, false);
+		setAttribute(Attribute.lethal, false);
+		setAttribute(Attribute.heavy, false);
+		setAttribute(Attribute.breakable, false);
+		setAttribute(Attribute.crushable, false);
+		setAttribute(Attribute.explodable, false);
+		setAttribute(Attribute.collectable, false);
+	}
+	
+	/**
+     * Constructor with all informations
+     *
+     * @param position , position of the object.
+     *          
+     */
+	public Entity(Point position){
+		
+		setPosition(position);
 		setAttribute(Attribute.solid, false);
 		setAttribute(Attribute.lethal, false);
 		setAttribute(Attribute.heavy, false);
@@ -102,5 +119,5 @@ public abstract class Entity {
 		this.attributeSet.put(Attribute.explodable, false);
 		this.attributeSet.put(Attribute.breakable,false);
 	}
-	
+
 }

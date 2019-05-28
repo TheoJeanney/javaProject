@@ -10,10 +10,20 @@ import java.awt.image.BufferedImage;
 
 public class Wall extends Static {
 	
-	private BufferedImage sprite ; //=Wall.png , put the picture here and put FINAL.
-	private final boolean solid = true;
-	private final boolean explodable = true;
-	private BufferedImage sprite ; //@TODO=Wall.png , put the picture here and put FINAL. Do we need to put it into constructor???
+	/**
+     * Constructor with all informations
+     *
+     * @param posX entity X position
+     * @param posY entity Y position
+     *          
+     */
+	public Wall(int posX, int posY)
+	{
+		super(posX, posY);
+		setAttribute(Attribute.explodable, true);
+		setAttribute(Attribute.solid,true);
+		setAttribute(Attribute.rolling, true);
+	}
 	
 	/**
      * Constructor with all informations
@@ -21,9 +31,9 @@ public class Wall extends Static {
      * @param position , position of the object.
      *          
      */
-	public Wall(int posX, int posY)
+	public Wall(Point position)
 	{
-		super(posX, posY);
+		super(position);
 		setAttribute(Attribute.explodable, true);
 		setAttribute(Attribute.solid,true);
 		setAttribute(Attribute.rolling, true);

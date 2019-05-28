@@ -18,4 +18,16 @@ public class BoomMole extends Mole {
 		setAttribute(Attribute.martyrdom,true);
 		// TODO Auto-generated constructor stub
 	}
+	
+	/**
+     * Constructor with all informations
+     *
+     * @param posX entity X position
+     * @param posY entity Y position         
+     */
+	public BoomMole(Point position) {
+		super(position);
+		setAttribute(Attribute.martyrdom,true);
+		// TODO Auto-generated constructor stub
+	}
 }

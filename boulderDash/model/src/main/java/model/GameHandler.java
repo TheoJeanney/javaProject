@@ -19,12 +19,12 @@ import entity.*;
   */
  public class GameHandler {
  
-    private static Entity[][] level;
-    private static Entity player;
-    private static Entity exit;
-    private static int counterDiamondLeft;
-    private static int counterScore;
-    private static int counterTime; // Time in seconds stored as an int
+    private Entity[][] level;
+    private Entity player;
+    private Entity exit;
+    private int counterDiamondLeft;
+    private int counterScore;
+    private int counterTime; // Time in seconds stored as an int
 
     private static enum coordinateType {x,y};
     private static enum counterType {DIAMOND, TIME, SCORE};
@@ -43,40 +43,40 @@ import entity.*;
         ResultSet tempSet;  
         while (tempSet.next())
         {
-            private int entityX = tempSet.getString("enpX");
-            private int entityY = tempSet.getString("enpY");
+            int entityX = tempSet.getInt("enpX");
+            int entityY = tempSet.getInt("enpY");
 
             // @TODO go through each entry in a level entity placmetn query
             switch (tempSet.getString("entName")) 
             { // @TODO change this to a function that gives me
                 case "Hole":
-                    placeEntity(new Hole(), entityX, entityY);
+                    placeEntity(new Hole(entityX, entityY), entityX, entityY);
                     break;
                 case "Dirt":
-                    placeEntity(new Dirt(), entityX, entityY);
+                    placeEntity(new Dirt(entityX, entityY), entityX, entityY);
                     break;
                 case "Wall":
-                    placeEntity(new Wall(), entityX, entityY);
+                    placeEntity(new Wall(entityX, entityY), entityX, entityY);
                     break;
                 case "Boulder":
-                    placeEntity(new Boulder(), entityX, entityY);
+                    placeEntity(new Boulder(entityX, entityY), entityX, entityY);
                     break;
                 case "Diamond":
-                    placeEntity(new Diamond(), entityX, entityY);
+                    placeEntity(new Diamond(entityX, entityY), entityX, entityY);
                     break;
                 case "Player":
-                    this.player = new Player()
+                    this.player = new Player(entityX, entityY);
                     placeEntity(this.player, entityX, entityY);
                     break;
                 case "Exit":
-                    this.exit = new Exit()
-                    placeEntity(new Wall(), entityX, entityY);
+                    this.exit = new Exit(entityX, entityY);
+                    placeEntity(new Wall(entityX, entityY), entityX, entityY);
                     break;
                 case "Mole":
-                    placeEntity(new Mole(), entityX, entityY);
+                    placeEntity(new Mole(entityX, entityY), entityX, entityY);
                     break;
                 case "BoomMole":
-                    placeEntity(new BoomMole(), entityX, entityY);
+                    placeEntity(new BoomMole(entityX, entityY), entityX, entityY);
                     break;
                 default:
                     break;
@@ -110,7 +110,7 @@ import entity.*;
     */
     public void deleteEntity(int entityX, int entityY) 
     {
-        this.level[entityX][entityY] = new Hole();
+        this.level[entityX][entityY] = new Hole(entityX, entityY);
     }
 
     /**
@@ -121,7 +121,8 @@ import entity.*;
     */
     public void deleteEntity(Entity oldEntity) 
     {
-        this.level[oldEntity.getPosition().getX()][oldEntity.getPosition().getY()] = new Hole();
+    	
+        this.level[getEntityX(oldEntity)][getEntityY(oldEntity)] = new Hole(oldEntity.getPosition());
     }
 
     /**
@@ -140,7 +141,7 @@ import entity.*;
         {
             this.level[newX][newY] = this.level[oldX][oldX];
             deleteEntity(oldX, oldX);
-            if(this.level[newX][newY].getAttribute(Attribute.falling) && moveDir = direction.DOWN)
+            if(this.level[newX][newY].getAttribute(Attribute.falling) && moveDir == direction.DOWN)
             {
                 moveEntity(newX, newY, newX, newY - 1, direction.DOWN);
             }
@@ -162,9 +163,9 @@ import entity.*;
     {
         if(handleInteraction(movingEntity, newX, newY))
         {
-            this.level[newX][newY] = this.level[oldEntity.getPosition().getX()][oldEntity.getPosition().getY()];
-            this.level[oldEntity.getPosition().getX()][oldEntity.getPosition().getY()] = new Hole();
-            if(this.level[newX][newY].getAttribute(Attribute.falling) && moveDir = direction.DOWN)
+            this.level[newX][newY] = this.level[getEntityX(movingEntity)][getEntityY(movingEntity)];
+            this.level[getEntityX(movingEntity)][getEntityY(movingEntity)] = new Hole(movingEntity.getPosition());
+            if(this.level[newX][newY].getAttribute(Attribute.falling) && moveDir == direction.DOWN)
             {
                 moveEntity(newX, newY, newX, newY - 1, direction.DOWN);
             }
@@ -191,7 +192,7 @@ import entity.*;
     */
     public Entity[][] getLevel()
     {
-        return this.level
+        return this.level;
     }
 
     /**
@@ -206,10 +207,10 @@ import entity.*;
         switch (counter) {
             case DIAMOND:
                 this.counterDiamondLeft = newValue;
-                if (newValue =< 0)
+                if (newValue <= 0)
                 {
-                    private int exitX = this.exit.getPosition().getX();
-                    private int exitY = this.exit.getPosition().getY();
+                    int exitX = getEntityX(this.exit);
+                    int exitY = getEntityY(this.exit);
                     deleteEntity(exitX, exitY);
                     placeEntity(this.exit, exitX, exitY);
                 }
@@ -256,7 +257,7 @@ import entity.*;
     */
     public boolean handleInteraction(int actX, int actY, int sbjX, int sbjY) 
     {
-        if (this.level[actX][actY] = this.player) // @TODO change to player class
+        if (this.level[actX][actY] == this.player) // @TODO change to player class
         {
             if (this.level[sbjX][sbjY].getAttribute(Attribute.collectable))
             {
@@ -264,11 +265,12 @@ import entity.*;
                 setCounter(counterType.DIAMOND, getCounter(counterType.DIAMOND) - 1);
                 // @TODO add check for exit and end game
             }
-            else if (this.level[sbjX][sbjY].getAttribute(Attribute.lethal))
+            if (this.level[sbjX][sbjY].getAttribute(Attribute.lethal))
             {
                 // @TODO end game kill/delete player?
+ 
             }
-            else if (this.level[sbjX][sbjY].getAttribute(Attribute.breakable) && !(this.level[sbjX][sbjY].getAttribute(Attribute.solid)))
+            if (this.level[sbjX][sbjY].getAttribute(Attribute.breakable) && !(this.level[sbjX][sbjY].getAttribute(Attribute.solid)))
             {
                 deleteEntity(sbjX, sbjY);
                 return true;
@@ -290,7 +292,6 @@ import entity.*;
                 {
                     // @TODO end game kill/delete crushable
                     // @TODO if player end game?
-
                 }
                 return true;
             }
@@ -308,7 +309,7 @@ import entity.*;
     */
     public boolean handleInteraction(Entity actor, int sbjX, int sbjY) 
     {
-        if (actor = this.player) // @TODO change to player class
+        if (actor == this.player) // @TODO change to player class
         {
             if (this.level[sbjX][sbjY].getAttribute(Attribute.collectable))
             {
@@ -337,9 +338,13 @@ import entity.*;
             {
                 return false;
             }
-            else (this.level[sbjX][sbjY].getAttribute(Attribute.crushable) && actor.getAttribute(Attribute.heavy))
+            else 
             {
-                // @TODO end game kill/delete player?
+            	if (this.level[sbjX][sbjY].getAttribute(Attribute.crushable) && actor.getAttribute(Attribute.heavy))
+            	{
+                    // @TODO end game kill/delete crushable
+                    // @TODO if player end game?
+            	}
                 return true;
             }
         }
@@ -354,14 +359,14 @@ import entity.*;
     public void handleCascade(Point checkPoint)
     {
 
-        if(this.level[checkPoint.getX()][checkPoint.getY()].getAttribute(Attribute.falling))
+        if(this.level[(int) checkPoint.getX()][(int) checkPoint.getY()].getAttribute(Attribute.falling))
         {
-            moveEntity(checkPoint.getX(), checkPoint.getY(), checkPoint.getX(), checkPoint.getY() - 1, direction.DOWN)
+            moveEntity((int) checkPoint.getX(), (int) checkPoint.getY(), (int) checkPoint.getX(), (int) checkPoint.getY() - 1, direction.DOWN);
         }
-        else if(this.level[checkPoint.getX()][checkPoint.getY()].getAttribute(Attribute.rolling) && this.level[checkPoint.getX()][checkPoint.getY() - 1].getAttribute(Attribute.rolling))
+        else if(this.level[(int) checkPoint.getX()][(int) checkPoint.getY()].getAttribute(Attribute.rolling) && this.level[(int) checkPoint.getX()][(int) (checkPoint.getY() - 1)].getAttribute(Attribute.rolling))
         {
-            moveEntity(checkPoint.getX(), checkPoint.getY(), checkPoint.getX() - 1, checkPoint.getY(), direction.RIGHT)
-            moveEntity(checkPoint.getX(), checkPoint.getY(), checkPoint.getX(), checkPoint.getY() - 1, direction.DOWN)
+            moveEntity((int) checkPoint.getX(), (int) checkPoint.getY(), (int) checkPoint.getX() - 1, (int) checkPoint.getY(), direction.RIGHT);
+            moveEntity((int) checkPoint.getX(), (int) checkPoint.getY(), (int) checkPoint.getX(), (int) checkPoint.getY() - 1, direction.DOWN);
         }
         
     }
@@ -375,13 +380,19 @@ import entity.*;
     */
     public void startCascade(int actX, int actY)
     {
-        private Entity actor = this.level[actX][actY];
-        private Point actPoint = actor.getPosition();
-        private Point NP = actPoint.translate(0, 1);
-        private Point WP = actPoint.translate(-1, 0);
-        private Point EP = actPoint.translate(1, 0;
-        private Point NWP = actPoint.translate(-1, 1);
-        private Point NEP = actPoint.translate(1, 1);
+        Entity actor = this.level[actX][actY];
+        Point actPoint = actor.getPosition();
+        
+        Point NP = actPoint;
+        NP.translate(0, 1);
+        Point WP = actPoint;
+        WP.translate(-1, 0);
+        Point EP = actPoint;
+        EP.translate(1, 0);
+        Point NWP = actPoint;
+        NWP.translate(-1, 1);
+        Point NEP = actPoint;
+        NEP.translate(1, 1);
 
         handleCascade(NP);
         handleCascade(WP);
@@ -398,17 +409,48 @@ import entity.*;
     */
     public void startCascade(Entity actor)
     {
-        private Point actPoint = actor.getPosition();
-        private Point NP = actPoint.translate(0, 1);
-        private Point WP = actPoint.translate(-1, 0);
-        private Point EP = actPoint.translate(1, 0;
-        private Point NWP = actPoint.translate(-1, 1);
-        private Point NEP = actPoint.translate(1, 1);
+        Point actPoint = actor.getPosition();
+        Point NP = actPoint;
+        NP.translate(0, 1);
+        Point WP = actPoint;
+        WP.translate(-1, 0);
+        Point EP = actPoint;
+        EP.translate(1, 0);
+        Point NWP = actPoint;
+        NWP.translate(-1, 1);
+        Point NEP = actPoint;
+        NEP.translate(1, 1);
 
         handleCascade(NP);
         handleCascade(WP);
         handleCascade(EP);
         handleCascade(NWP);
         handleCascade(NEP);
+    }
+    
+    /**
+    * <h1>getEntityX Method</h1>
+    * Retrieves and converts an entity's X coordinate as int
+    *
+    * @param ent the entity in question
+    * @return entity ent's X coordinate
+    */
+    public int getEntityX(Entity ent)
+    {
+    	int coordX = (int) ent.getPosition().getX();
+    	return(coordX);
+    }
+    
+    /**
+    * <h1>getEntityY Method</h1>
+    * Retrieves and converts an entity's Y coordinate as int
+    *
+    * @param ent the entity in question
+    * @return entity ent's Y coordinate
+    */
+    public int getEntityY(Entity ent)
+    {
+    	int coordY = (int) ent.getPosition().getY();
+    	return(coordY);
     }
 }
