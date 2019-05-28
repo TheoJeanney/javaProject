@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 public class Boulder extends  Mobile {

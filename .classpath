@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="boulderDash/contract/src/main/java"/>
+	<classpathentry kind="src" path="boulderDash/controller/src/main/java"/>
+	<classpathentry kind="src" path="boulderDash/entity/src/main/java"/>
+	<classpathentry kind="src" path="boulderDash/main/src/main/java"/>
+	<classpathentry kind="src" path="boulderDash/model/src/main/java"/>
+	<classpathentry kind="src" path="boulderDash/model/src/test/java"/>
+	<classpathentry kind="src" path="boulderDash/view/src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="boulderDash/contract/target/classes"/>
+</classpath>

@@ -5,9 +5,8 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 /**
- * The Class Entity.
+ * @author Théo
  *
- * @author Jean-Aymeric Diet
  */
 public abstract class Entity {
 
@@ -29,11 +28,11 @@ public abstract class Entity {
 	
 	
 	public Point getPosition() {
-		return null;
+		return position;
 	}
 	
-	public void setPosition(Point position){
-		
+	public void setPosition(Point newPosition){
+		this.position = newPosition;
 	}
 	
 	public void setPosition(Integer posX,Integer posY){
