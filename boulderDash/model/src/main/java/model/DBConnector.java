@@ -1,11 +1,24 @@
 package model;
 
+
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+/**
+ * <h1>DBConnector Class </h1>
+ * connect the dataBase to the javaCode, then can execute queries.
+ * <p>
+ * we will use this class to catch the object in the map, and then we will use them to interact with them.
+ * <p>
+ * 
+* @author Théo
+* @version 9.2
+* @since 0.9.0
+*/
 
 
 public class DBConnector {
@@ -18,10 +31,21 @@ public class DBConnector {
 	private Statement statement;
 	private static DBConnector instance;
 	
+	/**
+     * Method that open the connection.
+     *   
+     *          
+     */
 	public void DBConnector(){
 		this.isOpen();
 	}
 	
+	/**
+     * Method that connect dataBase with JavaCode.
+     * 
+     * @return if the connection is good, return true.   
+     *          
+     */
 	public boolean isOpen(){
 		try {
 			
@@ -36,11 +60,22 @@ public class DBConnector {
 		return false;
 		
 	}
-	
+	/**
+     * Method that set the Instance
+     *
+     * @param instance ,      
+     *          
+     */
 	public static void setInstance(DBConnector instance){
 		DBConnector.instance = instance;
 	}
 	
+	/**
+     * Method that get the instance
+
+     * @return the choice of the attribute.      
+     *          
+     */
 	public static DBConnector getInstance(){
 		return DBConnector.instance;
 		
