@@ -1,5 +1,9 @@
 package entity;
 
+/**
+* @author Théo
+*
+*/
 import java.awt.Point;
 
 public class BoomMole extends Mole {

@@ -1,5 +1,10 @@
 package entity;
 
+/**
+* @author Théo
+*
+*/
+
 import java.awt.Point;
 
 public class Mobile extends Entity {
