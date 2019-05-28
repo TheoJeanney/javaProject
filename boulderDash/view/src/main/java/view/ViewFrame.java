@@ -14,12 +14,19 @@ import contract.IController;
 import contract.IModel;
 
 /**
- * The Class ViewFrame.
+ * <h1>The Class ViewFrame.</h1>
  *
+ * The frame and it's function.
+ * <p>
+ * This object is used to do the outline of our map.
+ * <p>
+ * 
  * @author joana
  * 
+ * @version 9.2
+ * @since 0.9.0
  */
-class ViewFrame extends JFrame implements KeyListener {
+ public class ViewFrame extends JFrame implements KeyListener {
 
 	/** The model. */
 	private IModel model;
@@ -37,8 +44,9 @@ class ViewFrame extends JFrame implements KeyListener {
 	 * @throws HeadlessException
 	 *           the headless exception
 	 */
-	public ViewFrame(final IModel model) throws HeadlessException {
-		this.buildViewFrame(model);
+	public ViewFrame() throws HeadlessException {
+		super();
+		this.buildViewFrame();
 	}
 
 	/**
@@ -49,7 +57,7 @@ class ViewFrame extends JFrame implements KeyListener {
 	 * @param gc
 	 *          the gc
 	 */
-	public ViewFrame(final IModel model, final GraphicsConfiguration gc) {
+/*	public ViewFrame(final IModel model, final GraphicsConfiguration gc) {
 		super(gc);
 		this.buildViewFrame(model);
 	}
@@ -64,7 +72,7 @@ class ViewFrame extends JFrame implements KeyListener {
 	 * @throws HeadlessException
 	 *           the headless exception
 	 */
-	public ViewFrame(final IModel model, final String title) throws HeadlessException {
+/*	public ViewFrame(final IModel model, final String title) throws HeadlessException {
 		super(title);
 		this.buildViewFrame(model);
 	}
@@ -79,17 +87,17 @@ class ViewFrame extends JFrame implements KeyListener {
 	 * @param gc
 	 *          the gc
 	 */
-	public ViewFrame(final IModel model, final String title, final GraphicsConfiguration gc) {
+/*	public ViewFrame(final IModel model, final String title, final GraphicsConfiguration gc) {
 		super(title, gc);
 		this.buildViewFrame(model);
 	}
-
+*/
 	/**
 	 * Gets the controller.
 	 *
 	 * @return the controller
 	 */
-	private IController getController() {
+/*	private IController getController() {
 		return this.controller;
 	}
 
@@ -99,7 +107,7 @@ class ViewFrame extends JFrame implements KeyListener {
 	 * @param controller
 	 *          the new controller
 	 */
-	protected void setController(final IController controller) {
+/*	protected void setController(final IController controller) {
 		this.controller = controller;
 	}
 
@@ -108,7 +116,7 @@ class ViewFrame extends JFrame implements KeyListener {
 	 *
 	 * @return the model
 	 */
-	protected IModel getModel() {
+/*	protected IModel getModel() {
 		return this.model;
 	}
 
@@ -118,7 +126,7 @@ class ViewFrame extends JFrame implements KeyListener {
 	 * @param model
 	 *          the new model
 	 */
-	private void setModel(final IModel model) {
+/*	private void setModel(final IModel model) {
 		this.model = model;
 	}
 
@@ -128,8 +136,8 @@ class ViewFrame extends JFrame implements KeyListener {
 	 * @param model
 	 *          the model
 	 */
-	private void buildViewFrame(final IModel model) {
-		this.setModel(model);
+	private void buildViewFrame() {
+		//this.setModel(model);
 		/*close the frame with the cross*/
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		/*title of the frame (Bold and Italic)*/
@@ -139,7 +147,7 @@ class ViewFrame extends JFrame implements KeyListener {
 		this.setResizable(false);
 		this.addKeyListener(this);
 		/*content of the Frame with ViewPanel*/
-		this.setContentPane(new ViewPanel(this));
+		//this.setContentPane(new ViewPanel(this));
 		/*Dimensions of the frame*/
 		this.setSize(300+ this.getInsets().left + this.getInsets().right, 190 + this.getInsets().top + this.getInsets().bottom);
 		/*Window should be placed where we want*/
@@ -156,12 +164,30 @@ class ViewFrame extends JFrame implements KeyListener {
 		JOptionPane.showMessageDialog(null, message);
 	}
 
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	/*
 	 * (non-Javadoc)
 	 *
 	 * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
 	 */
-	public void keyTyped(final KeyEvent e) {
+/*	public void keyTyped(final KeyEvent e) {
 
 	}
 
@@ -170,7 +196,7 @@ class ViewFrame extends JFrame implements KeyListener {
 	 *
 	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
 	 */
-	public void keyPressed(final KeyEvent e) {
+/*	public void keyPressed(final KeyEvent e) {
 		this.getController().orderPerform(View.keyCodeToControllerOrder(e.getKeyCode()));
 	}
 
@@ -179,7 +205,7 @@ class ViewFrame extends JFrame implements KeyListener {
 	 *
 	 * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
 	 */
-	public void keyReleased(final KeyEvent e) {
+/*	public void keyReleased(final KeyEvent e) {
 
-	}
+	}*/
 }
