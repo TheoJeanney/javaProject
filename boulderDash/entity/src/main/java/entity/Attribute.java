@@ -1,5 +1,10 @@
 package entity;
 
+
+ /**
+ * @author Théo
+ *
+ */
 public enum Attribute {
 	solid,
 	lethal,

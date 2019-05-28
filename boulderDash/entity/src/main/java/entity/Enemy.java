@@ -1,10 +1,11 @@
 package entity;
 
-<<<<<<< HEAD
-<<<<<<< HEAD:boulderDash/entity/src/main/java/entity/Ennemy.java
-public class Ennemy extends Mobile {
-	
-	private boolean martyrdom = false;
+/**
+* @author Théo
+*
+*/
+
+import java.awt.Point;
 
 =======
 =======

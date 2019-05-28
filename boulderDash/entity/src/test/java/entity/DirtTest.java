@@ -68,7 +68,7 @@ public class DirtTest {
 	@Test
 	public void testSolid(){
 		
-		final boolean expected = false;
+		final boolean expected = true;
 		
 		System.out.println("Solid : " + entity.getAttribute(Attribute.solid));
 		assertEquals(expected,entity.getAttribute(Attribute.solid));	

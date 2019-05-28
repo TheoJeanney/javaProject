@@ -1,27 +1,21 @@
 package entity;
 
+/**
+* @author Théo
+*
+*/
+
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 public class Player extends Mobile {
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-	private BufferedImage sprite ; //= Rockford.png , put there the picture and don't forget the FINAL.
-	private final boolean crushable = true;
-	private final boolean explosable = true;
-=======
-=======
->>>>>>> theo
-=======
 	/**
      * Constructor with all informations
      *
      * @param position , position of the object.
      *          
      */
->>>>>>> 5b94aef... javaDocs entity
 	public Player(Point position) {
 		super(position);
 		setAttribute(Attribute.crushable,true);
