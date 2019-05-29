@@ -40,6 +40,8 @@ public abstract class Entity {
 		setAttribute(Attribute.crushable, false);
 		setAttribute(Attribute.explodable, false);
 		setAttribute(Attribute.collectable, false);
+		setAttribute(Attribute.rolling, false);
+		setAttribute(Attribute.falling, false);
 	}
 	
 	/**
