@@ -17,19 +17,7 @@ import java.awt.image.BufferedImage;
 
 
 public class Hole extends Static {
-	
-	/**
-     * Constructor with all informations
-     *
-     * @param posX entity X position
-     * @param posY entity Y position
-     *          
-     */
-	public Hole(int posX, int posY) {
-		super(posX, posY);
-		// TODO Auto-generated constructor stub
-	}
-	
+
 	/**
      * Constructor with all informations
      *
@@ -40,4 +28,7 @@ public class Hole extends Static {
 		super(position);
 		// TODO Auto-generated constructor stub
 	}
+	
+	private BufferedImage sprite ; //@TODO=Dirt.png, put the picture here and put the FINAL.Do we need to put it into constructor???
+
 }

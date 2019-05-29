@@ -6,7 +6,6 @@ package main;
 
 import contract.ControllerOrder;
 import controller.ControllerGame;
-import model.GameHandler;
 import view.View;
 
 /**
@@ -23,12 +22,4 @@ public abstract class Main {
      *            the arguments
      */
 
-	public static void main(String[] args){
-		
-		View view = new View();
-		
-		
-	}
-	
-	
 }
