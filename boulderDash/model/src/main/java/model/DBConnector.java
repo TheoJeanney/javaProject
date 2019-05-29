@@ -36,7 +36,7 @@ public class DBConnector {
      *   
      *          
      */
-	public void DBConnector(){
+	public DBConnector(){
 		this.isOpen();
 	}
 	
@@ -63,7 +63,7 @@ public class DBConnector {
 	/**
      * Method that set the Instance
      *
-     * @param instance ,      
+     * @param instance , differentiate our objects.
      *          
      */
 	public static void setInstance(DBConnector instance){
@@ -71,9 +71,9 @@ public class DBConnector {
 	}
 	
 	/**
-     * Method that get the instance
+     * Method that can get the object.
 
-     * @return the choice of the attribute.      
+     * @return the instance of our object.
      *          
      */
 	public static DBConnector getInstance(){
@@ -81,24 +81,59 @@ public class DBConnector {
 		
 	}
 	
+	/**
+     * Method that set the connection
+
+     * @param connection , initialize our connection.
+     *          
+     */
+	
 	public void setConnection(Connection connection) {
 		this.connection = connection;
 		
 	}
 	
+	/**
+     * Method that get the connection.
+
+     * @return the connection.     
+     *          
+     */
 	
 	public Connection getConnection(){
 		
 		return this.connection;
 	}
 	
+	/**
+     * Method that set the statement.
+     * 
+	 *
+     * @param statement , initialize our statement.
+     *          
+     */
+	
 	public void setStatement(Statement statement){
 		this.statement = statement;
 	}
 	
+	/**
+     * Method that get the statement
+
+     * @return the statement.     
+     *          
+     */
+	
 	public Statement getStatement(){
 		return this.statement;
 	}
+	
+	/**
+     * Method that execute our query.
+
+     * @return null or execute the query.
+     *          
+     */
 	
 	public ResultSet executeQuery (String query){
 		try {
@@ -110,6 +145,13 @@ public class DBConnector {
 		return null;
 	}
 	
+	/**
+     * Method that update something @TODO
+
+     * @return 0 or the execution of the query.   
+     *          
+     */
+	
 	public Integer executeUpdate(String query){
 		try {
             return this.statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
@@ -119,6 +161,14 @@ public class DBConnector {
         return 0;
 	}
 	
+	/**
+     * Method that get the instance
+     *
+     * @param query , enter with the statement. 
+     *
+     * @return null or if we can connected with our data base.
+     *          
+     */
 	
 	public CallableStatement prepareCall(String query){
 		try {

@@ -8,22 +8,37 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import entity.*;
+import model.*;
+
 public class GameHandlerTest {
+	
+    GameHandler game = new GameHandler();
+    Entity testBoulder = new Boulder(0,0);
+    //Entity testDiamond = new Diamond(1,0);
+    //Entity testDirt = new Dirt(0,1);
+    //Entity testWall = new Wall(1,1);
+    //Entity testPlayer = new Player(0,2);
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		System.out.println("oh");
 	}
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
+		System.out.println("eh");
 	}
 
 	@Before
 	public void setUp() throws Exception {
+
+		System.out.println("ah");
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		System.out.println("he");
 	}
 
 	@Test
@@ -33,7 +48,11 @@ public class GameHandlerTest {
 
 	@Test
 	public void testPlaceEntity() {
-		fail("Not yet implemented");
+		final GameHandler test = new GameHandler();
+		
+		game.placeEntity(testBoulder, 1, 1);
+		
+		
 	}
 
 	@Test
@@ -103,12 +122,15 @@ public class GameHandlerTest {
 
 	@Test
 	public void testGetEntityX() {
-		fail("Not yet implemented");
+        System.out.println("why");
+        final int expected = 0;
+        assertEquals(expected, game.getEntityX(testBoulder));
 	}
 
 	@Test
 	public void testGetEntityY() {
-		fail("Not yet implemented");
+		final int expected = 0;
+        assertEquals(expected, game.getEntityY(testBoulder));
 	}
 
 }

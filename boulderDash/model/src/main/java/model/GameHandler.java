@@ -26,7 +26,7 @@ import entity.*;
     private int counterScore;
     private int counterTime; // Time in seconds stored as an int
 
-    private static enum coordinateType {x,y};
+    //private static enum coordinateType {x,y};
     private static enum counterType {DIAMOND, TIME, SCORE};
     private static enum direction {UP, DOWN, LEFT, RIGHT};
 
@@ -38,9 +38,9 @@ import entity.*;
     */
     public GameHandler()
     {
-        setLevel(new Entity[40][20]);
+        //setLevel(new Entity[40][20]);
         // @TODO get count of stage entities stored in DB with stored procedure
-        ResultSet tempSet;  
+        /*ResultSet tempSet;  
         while (tempSet.next())
         {
             int entityX = tempSet.getInt("enpX");
@@ -81,10 +81,10 @@ import entity.*;
                 default:
                     break;
             }
-        }
-        setCounter(counterType.DIAMOND, 0); // @TODO change 0 to function that gets stage diamond from DB
-        setCounter(counterType.TIME, 0); // @TODO change 0 to function that gets stage time from DB
-        setCounter(counterType.SCORE, 0);
+        }*/
+        //setCounter(counterType.DIAMOND, 0); // @TODO change 0 to function that gets stage diamond from DB
+        //setCounter(counterType.TIME, 0); // @TODO change 0 to function that gets stage time from DB
+        //setCounter(counterType.SCORE, 0);
     }
 
     /**
