@@ -63,7 +63,7 @@ public class DBConnector {
 	/**
      * Method that set the Instance
      *
-     * @param instance , differentiate our objects.
+     * @param instance ,      
      *          
      */
 	public static void setInstance(DBConnector instance){
@@ -71,9 +71,9 @@ public class DBConnector {
 	}
 	
 	/**
-     * Method that can get the object.
+     * Method that get the instance
 
-     * @return the instance of our object.
+     * @return the choice of the attribute.      
      *          
      */
 	public static DBConnector getInstance(){
@@ -82,10 +82,9 @@ public class DBConnector {
 	}
 	
 	/**
-     * Method that set the connection
-
-     * @param connection , initialize our connection.
-     *          
+     * Method that set the connection.    
+     * 
+     * @param connection , 
      */
 	
 	public void setConnection(Connection connection) {
@@ -96,7 +95,7 @@ public class DBConnector {
 	/**
      * Method that get the connection.
 
-     * @return the connection.     
+     * @return the connection.   
      *          
      */
 	
@@ -106,10 +105,7 @@ public class DBConnector {
 	}
 	
 	/**
-     * Method that set the statement.
-     * 
-	 *
-     * @param statement , initialize our statement.
+     * Method that set the statement.     
      *          
      */
 	
@@ -118,9 +114,9 @@ public class DBConnector {
 	}
 	
 	/**
-     * Method that get the statement
+     * Method that get the instance
 
-     * @return the statement.     
+     * @return the choice of the attribute.      
      *          
      */
 	
@@ -129,9 +125,9 @@ public class DBConnector {
 	}
 	
 	/**
-     * Method that execute our query.
+     * Method that get the instance
 
-     * @return null or execute the query.
+     * @return the choice of the attribute.      
      *          
      */
 	
@@ -146,9 +142,9 @@ public class DBConnector {
 	}
 	
 	/**
-     * Method that update something @TODO
+     * Method that get the instance
 
-     * @return 0 or the execution of the query.   
+     * @return the choice of the attribute.      
      *          
      */
 	
@@ -163,10 +159,8 @@ public class DBConnector {
 	
 	/**
      * Method that get the instance
-     *
-     * @param query , enter with the statement. 
-     *
-     * @return null or if we can connected with our data base.
+
+     * @return the choice of the attribute.      
      *          
      */
 	

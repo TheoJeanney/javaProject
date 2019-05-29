@@ -20,21 +20,6 @@ public class Exit extends Static {
 	/**
      * Constructor with all informations
      *
-     * @param posX entity X position
-     * @param posY entity Y position
-     *          
-     */
-	public Exit(int posX, int posY) {
-		super(posX, posY);
-		setAttribute(Attribute.collectable, true);
-		setAttribute(Attribute.breakable, true);
-		setAttribute(Attribute.solid, true);
-		// @TODO Auto-generated constructor stub
-	}
-	
-	/**
-     * Constructor with all informations
-     *
      * @param position , position of the object.
      *          
      */
@@ -42,7 +27,6 @@ public class Exit extends Static {
 		super(position);
 		setAttribute(Attribute.collectable, true);
 		setAttribute(Attribute.breakable, true);
-		setAttribute(Attribute.solid, true);
 		// @TODO Auto-generated constructor stub
 	}
 

@@ -2,7 +2,11 @@ package model;
 
 /**
  * <h1>DAOHandler Class </h1>
+ * @TODO
  * 
+ * <p>
+ * 
+ * <p>
  * 
 * @author Théo
 * @version 9.2
@@ -14,35 +18,16 @@ import java.sql.ResultSet;
 
 public class DAOHandler {
 	
-	  /**
-     * Execute query.
-     *
-     * @param query
-     *            the query
-     * @return the result set
-     */
-	protected static ResultSet executeQuery(String query){
-		return DBConnector.getInstance().executeQuery(query);
+	protected static ResultSet executeQuery(){
+		return null;
 		
 	}
-	 /**
-     * Execute update.
-     *
-     * @param query
-     *            the query
-     * @return the int
-     */
-	protected static Integer executeUpdate(String query){
-		return DBConnector.getInstance().executeUpdate(query);
+	
+	protected static Integer executeUpdate(){
+		return 0;
 	}
-	 /**
-     * Prepare call.
-     *
-     * @param query
-     *            the query
-     * @return the callable statement
-     */
-	protected static CallableStatement prepareCall(String query){
-		return DBConnector.getInstance().prepareCall(query);
+	
+	protected static CallableStatement prepareCall(){
+		return null;
 	}
 }

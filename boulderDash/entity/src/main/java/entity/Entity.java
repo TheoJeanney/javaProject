@@ -20,28 +20,10 @@ import java.util.HashMap;
 
 public abstract class Entity {
 
+	private BufferedImage sprite;
 	private Point position;
 	HashMap<Attribute, Boolean> attributeSet = new HashMap<Attribute, Boolean>();
 
-	/**
-     * Constructor with all informations
-     *
-     * @param posX entity X position
-     * @param posY entity Y position
-     *          
-     */
-	public Entity(int posX, int posY){
-		
-		setPosition(new Point(posX, posY));
-		setAttribute(Attribute.solid, false);
-		setAttribute(Attribute.lethal, false);
-		setAttribute(Attribute.heavy, false);
-		setAttribute(Attribute.breakable, false);
-		setAttribute(Attribute.crushable, false);
-		setAttribute(Attribute.explodable, false);
-		setAttribute(Attribute.collectable, false);
-	}
-	
 	/**
      * Constructor with all informations
      *
@@ -89,8 +71,9 @@ public abstract class Entity {
      * @param posY , coordinate Y of the object.       
      *          
      */
-	public void setPosition(int posX, int posY){
-		this.position.setLocation(posX,posY);
+	public void setPosition(Integer posX,Integer posY){
+		this.position.x = posX;
+		this.position.y = posY;
 	}
 	
 	/**
@@ -128,5 +111,5 @@ public abstract class Entity {
 		this.attributeSet.put(Attribute.explodable, false);
 		this.attributeSet.put(Attribute.breakable,false);
 	}
-
+	
 }
