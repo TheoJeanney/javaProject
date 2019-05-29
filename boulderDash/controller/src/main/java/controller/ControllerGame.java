@@ -11,7 +11,7 @@ public class ControllerGame implements KeyListener {
 	private IView view;
 	private IModel model;
 	
-	public void ControllerGame(IView view, IModel model){
+	public ControllerGame(IView view, IModel model){
 		
 	}
 	

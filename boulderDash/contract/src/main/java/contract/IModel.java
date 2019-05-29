@@ -9,19 +9,13 @@ import java.util.Observable;
  * @author Jean-Aymeric Diet
  */
 public interface IModel {
-
-	/**
-	 * Gets the hello world.
-	 *
-	 * @return the helloworld entity
-	 */
-
 	/**
 	 * Load the message.
 	 *
 	 * @param code
 	 *          the code
 	 */
+	
 	void loadHelloWorld(String code);
 
 	/**
@@ -29,5 +23,6 @@ public interface IModel {
 	 *
 	 * @return the observable
 	 */
+	
 	Observable getObservable();
 }
