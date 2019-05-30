@@ -1,7 +1,6 @@
 package entity;
 
 import java.awt.Point;
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 /**
@@ -32,7 +31,7 @@ public abstract class Entity {
      */
 	public Entity(int posX, int posY){
 		
-		setPosition(posX, posY);
+		setPosition(new Point(posX, posY));
 		setAttribute(Attribute.solid, false);
 		setAttribute(Attribute.lethal, false);
 		setAttribute(Attribute.heavy, false);
@@ -40,6 +39,8 @@ public abstract class Entity {
 		setAttribute(Attribute.crushable, false);
 		setAttribute(Attribute.explodable, false);
 		setAttribute(Attribute.collectable, false);
+		setAttribute(Attribute.rolling,false);
+		setAttribute(Attribute.falling,false);
 	}
 	
 	/**
@@ -89,9 +90,8 @@ public abstract class Entity {
      * @param posY , coordinate Y of the object.       
      *          
      */
-	public void setPosition(Integer posX,Integer posY){
-		this.position.x = posX;
-		this.position.y = posY;
+	public void setPosition(int posX,int posY){
+		this.position.setLocation(posX, posY);
 	}
 	
 	/**

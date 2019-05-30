@@ -39,7 +39,7 @@ public class Player extends Mobile {
      *          
      */
 	public Player(Point position) {
-		super(posX, posY);
+		super(position);
 		setAttribute(Attribute.crushable,true);
 		setAttribute(Attribute.explodable,true);
 		// TODO Auto-generated constructor stub

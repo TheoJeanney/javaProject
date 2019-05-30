@@ -1,6 +1,6 @@
 package model;
 
-import java.sql.ResultSet;
+//import java.sql.ResultSet;
 import java.awt.Point;
 
 import entity.*;
@@ -26,21 +26,18 @@ import entity.*;
     private int counterScore;
     private int counterTime; // Time in seconds stored as an int
 
-    private static enum coordinateType {x,y};
-    private static enum counterType {DIAMOND, TIME, SCORE};
-    private static enum direction {UP, DOWN, LEFT, RIGHT};
+    //private static enum coordinateType {x,y};
 
     /**
     * <h1>GameHandler Constructor</h1>
     *
-    * @TODO define parameters
-    * @param undefined needs to be defined
     */
     public GameHandler()
     {
-        setLevel(new Entity[40][20]);
+        // @TODO define parameters
+        //setLevel(new Entity[40][20]);
         // @TODO get count of stage entities stored in DB with stored procedure
-        ResultSet tempSet;  
+        /*ResultSet tempSet;  
         while (tempSet.next())
         {
             int entityX = tempSet.getInt("enpX");
@@ -81,10 +78,85 @@ import entity.*;
                 default:
                     break;
             }
-        }
-        setCounter(counterType.DIAMOND, 0); // @TODO change 0 to function that gets stage diamond from DB
-        setCounter(counterType.TIME, 0); // @TODO change 0 to function that gets stage time from DB
-        setCounter(counterType.SCORE, 0);
+        }*/
+        //setCounter(CounterType.DIAMOND, 0); // @TODO change 0 to function that gets stage diamond from DB
+        //setCounter(CounterType.TIME, 0); // @TODO change 0 to function that gets stage time from DB
+        //setCounter(CounterType.SCORE, 0);
+    }
+    
+	/**
+    * <h1>getPlayer Method</h1>
+    * returns player value stocked
+    *
+    * @return entity player stored in this.player
+    */
+    public Entity getPlayer()
+    {
+		return this.player;
+	}
+
+	/**
+	* <h1>setPlayer Method</h1>
+	* set player variable's value
+	*
+	* @param player entity we want to set
+	*/
+	public void setPlayer(Entity player)
+	{
+		this.player = player;
+	}
+	
+	/**
+    * <h1>playerIsAlive Method</h1>
+    * check if player variable is pointing to a player object
+    *
+    * @return boolean weather or not we find a player
+    */
+	public boolean playerIsAlive()
+	{
+		if(this.player instanceof Player)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	/**
+    * <h1>getExity Method</h1>
+    * returns exit value stocked
+    *
+    * @return entity exit stored in this.exit
+    */
+	public Entity getExit()
+	{
+		return this.exit;
+	}
+
+	/**
+	* <h1>setExit Method</h1>
+	* set exit variable's value
+	*
+	* @param exit entity we want to set
+	*/
+	public void setExit(Entity exit)
+	{
+		this.exit = exit;
+	}
+
+	/**
+    * <h1>getEntity Method</h1>
+    * return an entity in the level matrix
+    *
+    * @param entityX the entities X position
+    * @param entityY the entities Y position
+    * @return entity in matrix
+    */
+    public Entity getEntity(int entityX, int entityY) 
+    {
+        return this.level[entityX][entityY];
     }
 
     /**
@@ -110,7 +182,12 @@ import entity.*;
     */
     public void deleteEntity(int entityX, int entityY) 
     {
-        this.level[entityX][entityY] = new Hole(entityX, entityY);
+    	Entity oldEntity = this.level[entityX][entityY];
+    	this.level[entityX][entityY] = new Hole(entityX, entityY);
+        if (oldEntity instanceof Player)
+        {
+        	setPlayer(null);
+        }
     }
 
     /**
@@ -121,8 +198,11 @@ import entity.*;
     */
     public void deleteEntity(Entity oldEntity) 
     {
-    	
         this.level[getEntityX(oldEntity)][getEntityY(oldEntity)] = new Hole(oldEntity.getPosition());
+        if (oldEntity instanceof Player)
+        {
+        	setPlayer(null);
+        }
     }
 
     /**
@@ -133,22 +213,35 @@ import entity.*;
     * @param oldY the entities current Y position
     * @param newX the entities destination X position
     * @param newY the entities destination Y position
-    * @param moveDir the direction the entity want to move
+    * @param moveDir the Direction the entity want to move
     */
-    public void moveEntity(int oldX, int oldY, int newX, int newY, direction moveDir) 
+    public void moveEntity(int oldX, int oldY, int newX, int newY, Direction moveDir) 
     {
+    	System.out.println("HI");
+    	System.out.println("Moving (BEFORE) - " + this.level[oldX][oldY] + " to " + this.level[newX][newY]);
+    	System.out.println("MoveCoords - " + oldX + ", " + oldY + " to " + newX + ", " +newY);
+    	System.out.println("*MOVE TEST" + handleInteraction(oldX, oldY, newX, newY));
+
         if(handleInteraction(oldX, oldY, newX, newY))
         {
-            this.level[newX][newY] = this.level[oldX][oldX];
-            deleteEntity(oldX, oldX);
-            if(this.level[newX][newY].getAttribute(Attribute.falling) && moveDir == direction.DOWN)
+        	System.out.println("We Can Move");
+        	System.out.println("Moving - " + this.level[oldX][oldY] + " to " + this.level[newX][newY]);
+        	System.out.println("MoveCoords - " + oldX + ", " + oldY + " to " + newX + ", " +newY);
+            this.level[newX][newY] = this.level[oldX][oldY];
+            deleteEntity(oldX, oldY);
+        	System.out.println("Moved - OLD: " + this.level[oldX][oldY] + " NEW: " + this.level[newX][newY]);
+        	System.out.println("CASCADE CALL");
+            startCascade(oldX, oldY, moveDir);
+            if(this.level[newX][newY].getAttribute(Attribute.falling) && moveDir == Direction.DOWN)
             {
-                moveEntity(newX, newY, newX, newY - 1, direction.DOWN);
+            	System.out.println("Still Moving...");
+                moveEntity(newX, newY, newX, newY + 1, Direction.DOWN);
             }
         }
-        startCascade(oldX, oldY);
 
     }
+    
+    // @TODO add move with just direction and remove direction
 
     /**
     * <h1>moveEntity Method</h1>
@@ -157,20 +250,22 @@ import entity.*;
     * @param movingEntity pointer to the entity
     * @param newX the entities destination X position
     * @param newY the entities destination Y position
-    * @param moveDir the direction the entity want to move
+    * @param moveDir the Direction the entity want to move
     */
-    public void moveEntity(Entity movingEntity, int newX, int newY, direction moveDir) 
+    public void moveEntity(Entity movingEntity, int newX, int newY, Direction moveDir) 
     {
         if(handleInteraction(movingEntity, newX, newY))
         {
+        	int oldX = getEntityX(movingEntity);
+        	int oldY = getEntityY(movingEntity);
             this.level[newX][newY] = this.level[getEntityX(movingEntity)][getEntityY(movingEntity)];
-            this.level[getEntityX(movingEntity)][getEntityY(movingEntity)] = new Hole(movingEntity.getPosition());
-            if(this.level[newX][newY].getAttribute(Attribute.falling) && moveDir == direction.DOWN)
+            deleteEntity(oldX, oldY);
+            startCascade(oldX, oldY, moveDir);
+            if(this.level[newX][newY].getAttribute(Attribute.falling) && moveDir == Direction.DOWN)
             {
-                moveEntity(newX, newY, newX, newY - 1, direction.DOWN);
+                moveEntity(newX, newY, newX, newY + 1, Direction.DOWN);
             }
         }
-        startCascade(movingEntity);
     }
 
     /**
@@ -202,7 +297,7 @@ import entity.*;
     * @param counter which counter are we treating
     * @param newValue new value for our counter
     */
-    public void setCounter(counterType counter, int newValue)
+    public void setCounter(CounterType counter, int newValue)
     {
         switch (counter) {
             case DIAMOND:
@@ -231,7 +326,7 @@ import entity.*;
     * @param counter which counter are we treating
     * @return value of our counter in int
     */
-    public int getCounter(counterType counter)
+    public int getCounter(CounterType counter)
     {
         switch (counter) {
             case DIAMOND:
@@ -257,38 +352,45 @@ import entity.*;
     */
     public boolean handleInteraction(int actX, int actY, int sbjX, int sbjY) 
     {
-        if (this.level[actX][actY] == this.player) // @TODO change to player class
+    	Entity actor = this.level[actX][actY];
+    	Entity subject = this.level[sbjX][sbjY];
+        if (actor instanceof Player)
         {
-            if (this.level[sbjX][sbjY].getAttribute(Attribute.collectable))
+
+        	if (subject.getAttribute(Attribute.collectable))
             {
                 // @TODO add check for diamond before chaning score
-                setCounter(counterType.DIAMOND, getCounter(counterType.DIAMOND) - 1);
+                setCounter(CounterType.DIAMOND, getCounter(CounterType.DIAMOND) - 1);
                 // @TODO add check for exit and end game
             }
-            if (this.level[sbjX][sbjY].getAttribute(Attribute.lethal))
+            if (subject.getAttribute(Attribute.lethal))
             {
                 // @TODO end game kill/delete player?
  
             }
-            if (this.level[sbjX][sbjY].getAttribute(Attribute.breakable) && !(this.level[sbjX][sbjY].getAttribute(Attribute.solid)))
+            if (subject.getAttribute(Attribute.breakable))
             {
-                deleteEntity(sbjX, sbjY);
+                deleteEntity(subject);
                 return true;
+            }
+            if (subject.getAttribute(Attribute.solid))
+            {
+                return false;
             }
             else
             {
-                return false;
+            	return true;
             }
         }
         else
         {
-            if (this.level[sbjX][sbjY].getAttribute(Attribute.solid))
+            if (subject.getAttribute(Attribute.solid))
             {
                 return false;
             }
             else 
             {
-                if (this.level[sbjX][sbjY].getAttribute(Attribute.crushable) && this.level[actX][actY].getAttribute(Attribute.heavy))
+                if (subject.getAttribute(Attribute.crushable) && actor.getAttribute(Attribute.heavy))
                 {
                     // @TODO end game kill/delete crushable
                     // @TODO if player end game?
@@ -307,46 +409,79 @@ import entity.*;
     * @param sbjY the subject current Y position
     * @return weather of not an object can move through another object
     */
-    public boolean handleInteraction(Entity actor, int sbjX, int sbjY) 
+    public boolean handleInteraction(Entity actor, int sbjX, int sbjY) // @TODO change to subject object based
     {
-        if (actor == this.player) // @TODO change to player class
+    	Entity subject = this.level[sbjX][sbjY];
+        if (actor instanceof Player)
         {
-            if (this.level[sbjX][sbjY].getAttribute(Attribute.collectable))
-            {
-                // @TODO add check for diamond before changing score
-                setCounter(counterType.DIAMOND, getCounter(counterType.DIAMOND) + 1);
-            }
 
-            if (this.level[sbjX][sbjY].getAttribute(Attribute.lethal))
+        	if (subject.getAttribute(Attribute.collectable))
+            {
+                // @TODO add check for diamond before chaning score
+                setCounter(CounterType.DIAMOND, getCounter(CounterType.DIAMOND) - 1);
+                // @TODO add check for exit and end game
+            }
+            if (subject.getAttribute(Attribute.lethal))
             {
                 // @TODO end game kill/delete player?
+ 
             }
-
-            if (this.level[sbjX][sbjY].getAttribute(Attribute.breakable) && !(this.level[sbjX][sbjY].getAttribute(Attribute.solid)))
+            if (subject.getAttribute(Attribute.breakable))
             {
-                deleteEntity(sbjX, sbjY);
+                deleteEntity(subject);
                 return true;
+            }
+            if (subject.getAttribute(Attribute.solid))
+            {
+                return false;
             }
             else
             {
-                return false;
+            	return true;
             }
         }
         else
         {
-            if (this.level[sbjX][sbjY].getAttribute(Attribute.solid))
+            if (subject.getAttribute(Attribute.solid))
             {
                 return false;
             }
             else 
             {
-            	if (this.level[sbjX][sbjY].getAttribute(Attribute.crushable) && actor.getAttribute(Attribute.heavy))
-            	{
+                if (subject.getAttribute(Attribute.crushable) && actor.getAttribute(Attribute.heavy))
+                {
                     // @TODO end game kill/delete crushable
                     // @TODO if player end game?
-            	}
+                }
                 return true;
             }
+        }
+    }
+    
+    /**
+    * <h1>handleRolling Method</h1>
+    * handles a rollable object rolling check and movement
+    *
+    * @param checkPointX the affected objects current X coordinate
+    * @param checkPointY the affected objects current Y coordinate
+    */
+    public void handleRolling(int checkPointX, int checkPointY)
+    {
+        if(this.level[checkPointX + 1][checkPointY] instanceof Hole && this.level[checkPointX + 1][checkPointY + 1] instanceof Hole)
+        {
+        	System.out.println("ROLL 1");
+            moveEntity(checkPointX, checkPointY, checkPointX + 1, checkPointY, Direction.RIGHT);
+            System.out.println("ROLL 2");
+            moveEntity(checkPointX + 1, checkPointY, checkPointX + 1, checkPointY + 1, Direction.DOWN);
+            System.out.println("ROLL OUT");
+        }
+        else if(this.level[checkPointX - 1][checkPointY] instanceof Hole && this.level[checkPointX - 1][checkPointY + 1] instanceof Hole)
+        {
+        	System.out.println("ROLL 1-2");
+        	moveEntity(checkPointX, checkPointY, checkPointX - 1, checkPointY, Direction.LEFT);
+        	System.out.println("ROLL 2-2");
+            moveEntity(checkPointX - 1, checkPointY, checkPointX - 1, checkPointY + 1, Direction.DOWN);
+            System.out.println("ROLL OUT");
         }
     }
 
@@ -354,19 +489,32 @@ import entity.*;
     * <h1>handleCascade Method</h1>
     * handles individual points that are sent by startCascade()
     *
-    * @param checkPoint the actors current X position
+    * @param checkPoint the affected objects current position
     */
     public void handleCascade(Point checkPoint)
     {
+    	System.out.println("CASCADE IN");
+    	System.out.println("checkPoint - " + checkPoint);
+    	int checkPointX = (int) checkPoint.getX();
+    	int checkPointY = (int) checkPoint.getY();
+    	System.out.println("checkPointX - " + checkPointX);
+    	System.out.println("checkPointY - " + checkPointY);
+    	if (checkPointX < 0 || checkPointY < 0)
+    	{
+    		System.out.println("CASCADE FAIL");
+    		return;
+    	}
+    	System.out.println("What Cascades? - " + this.level[checkPointX][checkPointY]);
 
-        if(this.level[(int) checkPoint.getX()][(int) checkPoint.getY()].getAttribute(Attribute.falling))
+        if(this.level[checkPointX][checkPointY].getAttribute(Attribute.falling))
         {
-            moveEntity((int) checkPoint.getX(), (int) checkPoint.getY(), (int) checkPoint.getX(), (int) checkPoint.getY() - 1, direction.DOWN);
+        	System.out.println("FALLING");
+            moveEntity(checkPointX, checkPointY, checkPointX, checkPointY + 1, Direction.DOWN);
         }
-        else if(this.level[(int) checkPoint.getX()][(int) checkPoint.getY()].getAttribute(Attribute.rolling) && this.level[(int) checkPoint.getX()][(int) (checkPoint.getY() - 1)].getAttribute(Attribute.rolling))
+        if(this.level[checkPointX][checkPointY].getAttribute(Attribute.rolling) && this.level[checkPointX][checkPointY + 1].getAttribute(Attribute.rolling))
         {
-            moveEntity((int) checkPoint.getX(), (int) checkPoint.getY(), (int) checkPoint.getX() - 1, (int) checkPoint.getY(), direction.RIGHT);
-            moveEntity((int) checkPoint.getX(), (int) checkPoint.getY(), (int) checkPoint.getX(), (int) checkPoint.getY() - 1, direction.DOWN);
+        	System.out.println("ROLLING");
+        	handleRolling(checkPointX, checkPointY);
         }
         
     }
@@ -377,28 +525,75 @@ import entity.*;
     *
     * @param actX the actors current X position
     * @param actY the actors current Y position
+    * @param moveDir the actors move direction
     */
-    public void startCascade(int actX, int actY)
+    public void startCascade(int actX, int actY, Direction moveDir)
     {
         Entity actor = this.level[actX][actY];
         Point actPoint = actor.getPosition();
-        
-        Point NP = actPoint;
-        NP.translate(0, 1);
-        Point WP = actPoint;
-        WP.translate(-1, 0);
-        Point EP = actPoint;
-        EP.translate(1, 0);
-        Point NWP = actPoint;
-        NWP.translate(-1, 1);
-        Point NEP = actPoint;
-        NEP.translate(1, 1);
 
-        handleCascade(NP);
-        handleCascade(WP);
-        handleCascade(EP);
-        handleCascade(NWP);
-        handleCascade(NEP);
+        Point NP = new Point(actPoint);
+        NP.translate(0, -1);
+        Point WP = new Point(actPoint);
+        WP.translate(-1, 0);
+        Point EP = new Point(actPoint);
+        EP.translate(1, 0);
+        Point NWP = new Point(actPoint);
+        NWP.translate(-1, -1);
+        Point NEP = new Point(actPoint);
+        NEP.translate(1, -1);
+        
+    	System.out.println("CASCADE START");
+    	System.out.println("PointStart - " + actPoint);
+    	System.out.println("11, 9 CHECK - " + this.level[11][9]);
+
+        
+        switch (moveDir) {
+            case UP:
+            	System.out.println("UP");
+                System.out.println("Starting WP - " + WP);
+                handleCascade(WP);
+                System.out.println("Starting EP - " + EP);
+                handleCascade(EP);
+                System.out.println("Starting NWP - " + NWP);
+                handleCascade(NWP);
+                System.out.println("Starting NEP - " + NEP);
+                handleCascade(NEP);
+                break;
+            case DOWN:
+            	System.out.println("NORTH");
+            	System.out.println("Starting NP - " + NP);
+                handleCascade(NP);
+                System.out.println("Starting WP - " + WP);
+                handleCascade(WP);
+                System.out.println("Starting EP - " + EP);
+                handleCascade(EP);
+                System.out.println("Starting NWP - " + NWP);
+                handleCascade(NWP);
+                System.out.println("Starting NEP - " + NEP);
+                handleCascade(NEP);
+                break;
+            case LEFT:
+            	System.out.println("LEFT");
+            	System.out.println("Starting NP - " + NP);
+                handleCascade(NP);
+                System.out.println("Starting EP - " + EP);
+                handleCascade(EP);
+                System.out.println("Starting NEP - " + NEP);
+                handleCascade(NEP);
+                break;
+            case RIGHT:
+            	System.out.println("RIGHT");
+            	System.out.println("Starting NP - " + NP);
+                handleCascade(NP);
+                System.out.println("Starting WP - " + WP);
+                handleCascade(WP);
+                System.out.println("Starting NWP - " + NWP);
+                handleCascade(NWP);
+                break;
+            default:
+                break;
+        }
     }
 
     /**
@@ -406,26 +601,72 @@ import entity.*;
     * handles interaction around the actors entity object to determine what happens
     *
     * @param actor the actors entity object
+    * @param moveDir the actors move direction
     */
-    public void startCascade(Entity actor)
+    public void startCascade(Entity actor, Direction moveDir)
     {
         Point actPoint = actor.getPosition();
-        Point NP = actPoint;
-        NP.translate(0, 1);
-        Point WP = actPoint;
+        Point NP = new Point(actPoint);
+        NP.translate(0, -1);
+        Point WP = new Point(actPoint);
         WP.translate(-1, 0);
-        Point EP = actPoint;
+        Point EP = new Point(actPoint);
         EP.translate(1, 0);
-        Point NWP = actPoint;
-        NWP.translate(-1, 1);
-        Point NEP = actPoint;
-        NEP.translate(1, 1);
+        Point NWP = new Point(actPoint);
+        NWP.translate(-1, -1);
+        Point NEP = new Point(actPoint);
+        NEP.translate(1, -1);
+        
+        System.out.println("CASCADE START");
+    	System.out.println("PointStart - " + actPoint);
+    	System.out.println("11, 9 CHECK - " + this.level[11][9]);
 
-        handleCascade(NP);
-        handleCascade(WP);
-        handleCascade(EP);
-        handleCascade(NWP);
-        handleCascade(NEP);
+        switch (moveDir) {
+        case UP:
+        	System.out.println("UP");
+            System.out.println("Starting WP - " + WP);
+            handleCascade(WP);
+            System.out.println("Starting EP - " + EP);
+            handleCascade(EP);
+            System.out.println("Starting NWP - " + NWP);
+            handleCascade(NWP);
+            System.out.println("Starting NEP - " + NEP);
+            handleCascade(NEP);
+            break;
+        case DOWN:
+        	System.out.println("NORTH");
+        	System.out.println("Starting NP - " + NP);
+            handleCascade(NP);
+            System.out.println("Starting WP - " + WP);
+            handleCascade(WP);
+            System.out.println("Starting EP - " + EP);
+            handleCascade(EP);
+            System.out.println("Starting NWP - " + NWP);
+            handleCascade(NWP);
+            System.out.println("Starting NEP - " + NEP);
+            handleCascade(NEP);
+            break;
+        case LEFT:
+        	System.out.println("LEFT");
+        	System.out.println("Starting NP - " + NP);
+            handleCascade(NP);
+            System.out.println("Starting EP - " + EP);
+            handleCascade(EP);
+            System.out.println("Starting NEP - " + NEP);
+            handleCascade(NEP);
+            break;
+        case RIGHT:
+        	System.out.println("RIGHT");
+        	System.out.println("Starting NP - " + NP);
+            handleCascade(NP);
+            System.out.println("Starting WP - " + WP);
+            handleCascade(WP);
+            System.out.println("Starting NWP - " + NWP);
+            handleCascade(NWP);
+            break;
+        default:
+            break;
+        }
     }
     
     /**
@@ -438,7 +679,7 @@ import entity.*;
     public int getEntityX(Entity ent)
     {
     	int coordX = (int) ent.getPosition().getX();
-    	return(coordX);
+    	return coordX;
     }
     
     /**
@@ -451,6 +692,6 @@ import entity.*;
     public int getEntityY(Entity ent)
     {
     	int coordY = (int) ent.getPosition().getY();
-    	return(coordY);
+    	return coordY;
     }
 }
