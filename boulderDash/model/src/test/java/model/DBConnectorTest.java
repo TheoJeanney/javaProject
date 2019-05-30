@@ -1,4 +1,4 @@
-package view;
+package model;
 
 import static org.junit.Assert.*;
 
@@ -7,13 +7,10 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-/**
- * 
- * @author joana
- *
- */
 
-public class ViewTest {
+public class DBConnectorTest {
+	
+	
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -32,22 +29,35 @@ public class ViewTest {
 	}
 
 	@Test
-	public void testKeyCodeToControllerOrder() {
+	public void testDBConnector() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testPrintMessage() {
+	public void testIsOpen() {
+		fail("Not yet implemented");
+	}
+
+
+	@Test
+	public void testGetInstance() {
+		fail("Not yet implemented");
+	}
+
+
+	@Test
+	public void testGetConnection() {
+		fail("Not yet implemented");
+	}
+
+
+	@Test
+	public void testGetStatement() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testRun() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetController() {
+	public void testExecuteQuery() {
 		fail("Not yet implemented");
 	}
 

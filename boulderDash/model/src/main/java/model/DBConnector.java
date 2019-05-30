@@ -36,7 +36,7 @@ public class DBConnector {
      *   
      *          
      */
-	public void DBConnector(){
+	public DBConnector(){
 		this.isOpen();
 	}
 	
@@ -81,24 +81,55 @@ public class DBConnector {
 		
 	}
 	
+	/**
+     * Method that set the connection.    
+     * 
+     * @param connection , 
+     */
+	
 	public void setConnection(Connection connection) {
 		this.connection = connection;
 		
 	}
 	
+	/**
+     * Method that get the connection.
+
+     * @return the connection.   
+     *          
+     */
 	
 	public Connection getConnection(){
 		
 		return this.connection;
 	}
 	
+	/**
+     * Method that set the statement.     
+     *          
+     */
+	
 	public void setStatement(Statement statement){
 		this.statement = statement;
 	}
 	
+	/**
+     * Method that get the instance
+
+     * @return the choice of the attribute.      
+     *          
+     */
+	
 	public Statement getStatement(){
 		return this.statement;
 	}
+	
+	/**
+     * Method that get the instance
+
+     * @return the choice of the attribute.      
+     *          
+     */
 	
 	public ResultSet executeQuery (String query){
 		try {
@@ -110,6 +141,13 @@ public class DBConnector {
 		return null;
 	}
 	
+	/**
+     * Method that get the instance
+
+     * @return the choice of the attribute.      
+     *          
+     */
+	
 	public Integer executeUpdate(String query){
 		try {
             return this.statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
@@ -119,6 +157,12 @@ public class DBConnector {
         return 0;
 	}
 	
+	/**
+     * Method that get the instance
+
+     * @return the choice of the attribute.      
+     *          
+     */
 	
 	public CallableStatement prepareCall(String query){
 		try {

@@ -59,6 +59,8 @@ public abstract class Entity {
 		setAttribute(Attribute.crushable, false);
 		setAttribute(Attribute.explodable, false);
 		setAttribute(Attribute.collectable, false);
+		setAttribute(Attribute.rolling, false);
+		setAttribute(Attribute.falling, false);
 	}
 	
 	/**
@@ -129,5 +131,5 @@ public abstract class Entity {
 		this.attributeSet.put(Attribute.explodable, false);
 		this.attributeSet.put(Attribute.breakable,false);
 	}
-
+	
 }

@@ -1,56 +1,95 @@
 package controller;
 
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import contract.ControllerOrder;
+import contract.IController;
 import contract.IModel;
 import contract.IView;
 
-public class ControllerGame implements KeyListener {
-	
-	private IView view;
-	private IModel model;
-	
-	public void ControllerGame(IView view, IModel model){
-		
-	}
-	
-	public void start(){
-		
-	}
-	
-	public IView getView(){
-		return null;
-	}
-	
-	public IModel getModel(){
-		return null;
-	}
-	
-	public void gameLoop(){
-		
-	}
-	
-	public void keyListener(KeyListener key){
-		
-	}
+/**
+ * The Class Controller.
+ */
+public abstract class ControllerGame implements IController, KeyListener {
 
-	@Override
-	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+    /** The view. */
+    private IView view;
 
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+    /** The model. */
+    private IModel model;
 
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+    /**
+     * Instantiates a new controller.
+     *
+     * @param view
+     *          the view
+     * @param model
+     *          the model
+     */
+    public ControllerGame (final IView view, final IModel model) {
+        this.setView(view);
+        this.setModel(model);
+    }
+
+    /**
+     * Control.
+     */
+    /*
+     * (non-Javadoc)
+     *
+     * @see contract.IController#control()
+     */
+    public void control() {
+        this.view.printMessage("Press the keyboard arrows to move on the map.");
+    }
+    /**
+     * Sets the view.
+     *
+     * @param pview
+     *            the new view
+     */
+    private void setView(final IView pview) {
+        this.view = pview;
+    }
+
+    /**
+     * Sets the model.
+     *
+     * @param model
+     *          the new model
+     */
+    private void setModel(final IModel model) {
+        this.model = model;
+    }
+
+    /**
+     * Order perform.
+     *
+     * @param controllerOrder
+     *            the controller order
+     */
+    /*
+     * (non-Javadoc)
+     *
+     * @see contract.IController#orderPerform(contract.ControllerOrder)
+     */
+    public void orderPerform(final ControllerOrder controllerOrder) {
+        switch (controllerOrder) {
+            case LEFT:
+                this.model.loadHelloWorld("GB");
+                break;
+            case RIGHT:
+                this.model.loadHelloWorld("FR");
+                break;
+            case UP:
+                this.model.loadHelloWorld("DE");
+                break;
+            case DOWN:
+                this.model.loadHelloWorld("ID");
+                break;
+            default:
+                break;
+        }
+    }
 
 }
