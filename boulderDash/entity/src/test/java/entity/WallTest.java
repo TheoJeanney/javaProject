@@ -39,6 +39,11 @@ public class WallTest {
 	public void tearDown() throws Exception {
 	}
 
+	/**
+     * Test is the object is explosable.
+     *          
+     */
+	
 	@Test
 	public void testExplosable(){
 		
@@ -47,8 +52,12 @@ public class WallTest {
 		System.out.println("Explodable : " + entity.getAttribute(Attribute.explodable));
 		assertEquals(expected,entity.getAttribute(Attribute.explodable));
 		
-		
 	}
+	
+	/**
+     * Test is the object is crushable.
+     *          
+     */
 	
 	@Test
 	public void testCrushable(){
@@ -58,8 +67,12 @@ public class WallTest {
 		System.out.println("Crushable : " + entity.getAttribute(Attribute.crushable));
 		assertEquals(expected,entity.getAttribute(Attribute.crushable));
 		
-		
 	}
+	
+	/**
+     * Test is the object is breakable.
+     *          
+     */
 	
 	@Test
 	public void testBreakable(){
@@ -69,8 +82,12 @@ public class WallTest {
 		System.out.println("Breakable : " + entity.getAttribute(Attribute.breakable));
 		assertEquals(expected,entity.getAttribute(Attribute.breakable));
 		
-		
 	}
+	
+	/**
+     * Test is the object is solid.
+     *          
+     */
 	
 	@Test
 	public void testSolid(){
@@ -81,6 +98,11 @@ public class WallTest {
 		assertEquals(expected,entity.getAttribute(Attribute.solid));	
 	}
 	
+	/**
+     * Test is the object is lethal.
+     *          
+     */
+	
 	@Test
 	public void testLethal(){
 		
@@ -90,6 +112,10 @@ public class WallTest {
 		assertEquals(expected,entity.getAttribute(Attribute.lethal));	
 	}
 	
+	/**
+     * Test is the object is heavy.
+     *          
+     */
 	
 	@Test
 	public void testHeavy(){
@@ -100,6 +126,10 @@ public class WallTest {
 		assertEquals(expected,entity.getAttribute(Attribute.heavy));	
 	}
 	
+	/**
+     * Test is the object is collectable.
+     *          
+     */
 	
 	@Test
 	public void testCollectable(){

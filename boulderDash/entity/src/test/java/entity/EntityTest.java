@@ -26,14 +26,16 @@ public class EntityTest {
 
 	@Before
 	public void setUp() throws Exception {
-		//this.entity.setPosition(testPoint);
-		//this.entity.attributeSet.put(Attribute.breakable, true);
 	}
 
 	@After
 	public void tearDown() throws Exception {
 	}
 
+	/**
+     * Test is the object has a good position.
+     *          
+     */
 	@Test
 	public void testGetPosition() {
 		final double expectedX = 1.0;
@@ -47,6 +49,11 @@ public class EntityTest {
 		
 	}
 
+	/**
+     * Test is the attribute of an object is well implemented. 
+     *          
+     */
+	
 	@Test
 	public void testGetAttribute() {
 		final boolean expected = true;

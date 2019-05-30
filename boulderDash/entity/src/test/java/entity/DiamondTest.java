@@ -32,6 +32,11 @@ public class DiamondTest {
 	public void tearDown() throws Exception {
 	}
 
+	/**
+     * Test is the object is explosable.
+     *          
+     */
+	
 	@Test
 	public void testExplosable(){
 		
@@ -42,6 +47,11 @@ public class DiamondTest {
 		
 		
 	}
+	
+	/**
+     * Test is the object is crushable.
+     *          
+     */
 	
 	@Test
 	public void testCrushable(){
@@ -54,6 +64,11 @@ public class DiamondTest {
 		
 	}
 	
+	/**
+     * Test is the object is breakable.
+     *          
+     */
+	
 	@Test
 	public void testBreakable(){
 		
@@ -65,6 +80,11 @@ public class DiamondTest {
 		
 	}
 	
+	/**
+     * Test is the object is solid.
+     *          
+     */
+	
 	@Test
 	public void testSolid(){
 		
@@ -73,6 +93,11 @@ public class DiamondTest {
 		System.out.println("Solid : " + entity.getAttribute(Attribute.solid));
 		assertEquals(expected,entity.getAttribute(Attribute.solid));	
 	}
+	
+	/**
+     * Test is the object is lethal.
+     *          
+     */
 	
 	@Test
 	public void testLethal(){
@@ -83,6 +108,10 @@ public class DiamondTest {
 		assertEquals(expected,entity.getAttribute(Attribute.lethal));	
 	}
 	
+	/**
+     * Test is the object is heavy.
+     *          
+     */
 	
 	@Test
 	public void testHeavy(){
@@ -94,6 +123,11 @@ public class DiamondTest {
 	}
 	
 	
+	/**
+     * Test is the object is collectable.
+     *          
+     */
+	
 	@Test
 	public void testCollectable(){
 		
@@ -103,6 +137,11 @@ public class DiamondTest {
 		assertEquals(expected,entity.getAttribute(Attribute.collectable));	
 	}
 	
+	/**
+     * Test is the object is rolling.
+     *          
+     */
+	
 	@Test
 	public void testRolling(){
 		final boolean expected = true;
@@ -110,6 +149,11 @@ public class DiamondTest {
 		System.out.println("Rolling : " + entity.getAttribute(Attribute.rolling));
 		assertEquals(expected,entity.getAttribute(Attribute.rolling));	
 	}
+	
+	/**
+     * Test is the object is falling.
+     *          
+     */
 	
 	@Test
 	public void testFalling(){

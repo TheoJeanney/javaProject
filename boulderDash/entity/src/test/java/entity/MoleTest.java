@@ -33,6 +33,11 @@ public class MoleTest {
 	public void tearDown() throws Exception {
 	}
 
+	/**
+     * Test is the object is explosable.
+     *          
+     */
+	
 	@Test
 	public void testExplosable(){
 		
@@ -43,6 +48,11 @@ public class MoleTest {
 		
 		
 	}
+	
+	/**
+     * Test is the object is crushable.
+     *          
+     */
 	
 	@Test
 	public void testCrushable(){
@@ -55,6 +65,11 @@ public class MoleTest {
 		
 	}
 	
+	/**
+     * Test is the object is breakable.
+     *          
+     */
+	
 	@Test
 	public void testBreakable(){
 		
@@ -66,6 +81,11 @@ public class MoleTest {
 		
 	}
 	
+	/**
+     * Test is the object is solid.
+     *          
+     */
+	
 	@Test
 	public void testSolid(){
 		
@@ -74,6 +94,11 @@ public class MoleTest {
 		System.out.println("Solid : " + entity.getAttribute(Attribute.solid));
 		assertEquals(expected,entity.getAttribute(Attribute.solid));	
 	}
+	
+	/**
+     * Test is the object is lethal.
+     *          
+     */
 	
 	@Test
 	public void testLethal(){
@@ -84,6 +109,10 @@ public class MoleTest {
 		assertEquals(expected,entity.getAttribute(Attribute.lethal));	
 	}
 	
+	/**
+     * Test is the object is heavy.
+     *          
+     */
 	
 	@Test
 	public void testHeavy(){
@@ -94,6 +123,10 @@ public class MoleTest {
 		assertEquals(expected,entity.getAttribute(Attribute.heavy));	
 	}
 	
+	/**
+     * Test is the object is collectable.
+     *          
+     */
 	
 	@Test
 	public void testCollectable(){
@@ -103,6 +136,12 @@ public class MoleTest {
 		System.out.println("Collectable : " + entity.getAttribute(Attribute.collectable));
 		assertEquals(expected,entity.getAttribute(Attribute.collectable));	
 	}
+	
+	/**
+     * Test is the object is martyrdom.
+     *          
+     */
+	
 	@Test
 	public void testMartyrdom(){
 		
@@ -111,6 +150,11 @@ public class MoleTest {
 		System.out.println("Martyrdom : " + entity.getAttribute(Attribute.martyrdom));
 		assertEquals(expected,entity.getAttribute(Attribute.martyrdom));	
 	}
+	/**
+     * Test is the object is rolling.
+     *          
+     */
+	
 	@Test
 	public void testRolling(){
 		final boolean expected=false;
@@ -118,6 +162,11 @@ public class MoleTest {
 		System.out.println("Rolling : " + entity.getAttribute(Attribute.rolling));
 		assertEquals(expected,entity.getAttribute(Attribute.rolling));	
 	}
+	
+	/**
+     * Test is the object is falling.
+     *          
+     */
 	
 	@Test
 	public void testFalling(){
