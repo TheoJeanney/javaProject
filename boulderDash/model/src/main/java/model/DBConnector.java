@@ -23,8 +23,8 @@ import java.sql.Statement;
 
 public class DBConnector {
 	
-	private static String userDB = "root";
-	private static String passDB="";
+	private static String userDB = "root";  //Initialize the username.
+	private static String passDB="";   //Initialize the password.
 	private static String urlDB="jdbc:mysql://localhost:3306/boulderDash"; //@TODOPut the URL of the DataBase.
 	
 	private Connection connection;
@@ -49,7 +49,7 @@ public class DBConnector {
 	public boolean isOpen(){
 		try {
 			
-			this.connection = DriverManager.getConnection(DBConnector.urlDB,DBConnector.userDB,DBConnector.passDB);
+			this.connection = DriverManager.getConnection(DBConnector.urlDB,DBConnector.userDB,DBConnector.passDB);  //Try to connect the code to the database.
 			this.statement = this.connection.createStatement();
 			return true;
 			

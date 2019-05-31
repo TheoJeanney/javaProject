@@ -3,7 +3,6 @@ package model;
 /**
  * <h1>DAOHandler Class </h1>
  * 
- * 
 * @author Théo
 * @version 9.2
 * @since 0.9.0
@@ -33,7 +32,7 @@ public class DAOHandler {
      * @return the int
      */
 	protected static Integer executeUpdate(String query){
-		return DBConnector.getInstance().executeUpdate(query);
+		return DBConnector.getInstance().executeUpdate(query); //test is she know what we are doing
 	}
 	 /**
      * Prepare call.
