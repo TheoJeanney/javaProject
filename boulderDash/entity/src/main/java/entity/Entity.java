@@ -108,10 +108,11 @@ public abstract class Entity {
      *
      */
 	
+	//We imagine that we could do a "cheat" player with this method.
 	public void setInvincible(){
-		this.attributeSet.put(Attribute.crushable, false);
-		this.attributeSet.put(Attribute.explodable, false);
-		this.attributeSet.put(Attribute.breakable,false);
+		this.attributeSet.put(Attribute.crushable, false); //Set crushable to false 
+		this.attributeSet.put(Attribute.explodable, false); //Set explodable to false
+		this.attributeSet.put(Attribute.breakable,false); //Set breakable to false
 	}
 	
 }

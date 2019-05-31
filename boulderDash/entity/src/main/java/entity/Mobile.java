@@ -25,6 +25,5 @@ public class Mobile extends Entity {
      */
 	public Mobile(Point position) {
 		super(position);
-		// TODO Auto-generated constructor stub
 	}
 }

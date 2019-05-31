@@ -31,8 +31,6 @@ public class Boulder extends  Mobile {
 		setAttribute(Attribute.explodable,true);
 		setAttribute(Attribute.rolling,true);
 		setAttribute(Attribute.falling,true);
-		
-		// TODO Auto-generated constructor stub
 	}
 	private BufferedImage sprite ;//@TODO = Boulder.png , put the picture here and don't forget the FINAL.Do we need to put it into constructor???
 

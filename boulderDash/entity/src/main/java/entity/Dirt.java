@@ -29,7 +29,6 @@ public class Dirt extends Static {
 		setAttribute(Attribute.breakable, true);
 		setAttribute(Attribute.explodable, true);
 		setAttribute(Attribute.solid, true);
-		// TODO Auto-generated constructor stub
 	}
 	private BufferedImage sprite ; //@TODO=Dirt.png, put the picture here and put the FINAL.Do we need to put it into constructor???
 

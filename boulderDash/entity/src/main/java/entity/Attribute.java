@@ -11,7 +11,7 @@ package entity;
 * @version 9.2
 * @since 0.9.0
 */
-
+//Enumeration all of our attribute.
 public enum Attribute {
 	solid,
 	lethal,

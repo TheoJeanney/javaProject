@@ -27,7 +27,6 @@ public class Exit extends Static {
 		super(position);
 		setAttribute(Attribute.collectable, true);
 		setAttribute(Attribute.breakable, true);
-		// @TODO Auto-generated constructor stub
 	}
 
 }
