@@ -1,22 +1,21 @@
 package model;
 
-//import java.sql.ResultSet;
+import java.sql.ResultSet;
 import java.awt.Point;
-
 import entity.*;
 
- /**
-  * <h1>GameHandler Class</h1>
-  * allows us to handle all objects, interactions, and simulations within our game,
-  * <p>
-  * all other game classes will revolve around this class, mainly entity which deals with our objects
-  * were dependent on DAOHandler, DBConnection, and Entity
-  * </p>
-  * 
-  * @author Thomas Barbod Varjavandi (alias - Deiaros)
-  * @version 0.9.0
-  * @since 0.9.0
-  */
+/**
+ * <h1>GameHandler Class</h1>
+* allows us to handle all objects, interactions, and simulations within our game,
+* <p>
+* all other game classes will revolve around this class, mainly entity which deals with our objects
+* were dependent on DAOHandler, DBConnection, and Entity
+* </p>
+* 
+* @author Thomas Barbod Varjavandi (alias - Deiaros)
+* @version 0.9.0
+* @since 0.9.0
+*/
  public class GameHandler {
  
     private Entity[][] level;
@@ -37,7 +36,7 @@ import entity.*;
         // @TODO define parameters
         setLevel(new Entity[40][20]);
         // @TODO get count of stage entities stored in DB with stored procedure
-        /*ResultSet tempSet;  
+        ResultSet tempSet;  // @TODO put DBConnector ResultSet here
         while (tempSet.next())
         {
             int entityX = tempSet.getInt("enpX");
@@ -78,10 +77,10 @@ import entity.*;
                 default:
                     break;
             }
-        }*/
-        //setCounter(CounterType.DIAMOND, 0); // @TODO change 0 to function that gets stage diamond from DB
-        //setCounter(CounterType.TIME, 0); // @TODO change 0 to function that gets stage time from DB
-        //setCounter(CounterType.SCORE, 0);
+        }
+        setCounter(CounterType.DIAMOND, 0); // @TODO change 0 to function that gets stage diamond from DB
+        setCounter(CounterType.TIME, 0); // @TODO change 0 to function that gets stage time from DB
+        setCounter(CounterType.SCORE, 0);
     }
     
 	/**
@@ -186,7 +185,9 @@ import entity.*;
     	this.level[entityX][entityY] = new Hole(entityX, entityY);
         if (oldEntity instanceof Player)
         {
-        	setPlayer(null);
+            deleteEntity(oldEntity);
+            setPlayer(null);
+            //endGame(gameStage.DEAD); //Controller Class function to end game
         }
     }
 
@@ -201,7 +202,9 @@ import entity.*;
         this.level[getEntityX(oldEntity)][getEntityY(oldEntity)] = new Hole(oldEntity.getPosition());
         if (oldEntity instanceof Player)
         {
-        	setPlayer(null);
+            deleteEntity(oldEntity);
+            setPlayer(null);
+            //endGame(gameStage.DEAD); //Controller Class function to end game
         }
     }
 
@@ -217,24 +220,16 @@ import entity.*;
     */
     public void moveEntity(int oldX, int oldY, int newX, int newY, Direction moveDir) 
     {
-    	System.out.println("HI");
-    	System.out.println("Moving (BEFORE) - " + this.level[oldX][oldY] + " to " + this.level[newX][newY]);
-    	System.out.println("MoveCoords - " + oldX + ", " + oldY + " to " + newX + ", " +newY);
-    	System.out.println("*MOVE TEST" + handleInteraction(oldX, oldY, newX, newY));
-
+        // handleInteraction() allows us to deal with interaction between mover and the object in front of them
         if(handleInteraction(oldX, oldY, newX, newY))
         {
-        	System.out.println("We Can Move");
-        	System.out.println("Moving - " + this.level[oldX][oldY] + " to " + this.level[newX][newY]);
-        	System.out.println("MoveCoords - " + oldX + ", " + oldY + " to " + newX + ", " +newY);
             this.level[newX][newY] = this.level[oldX][oldY];
             deleteEntity(oldX, oldY);
-        	System.out.println("Moved - OLD: " + this.level[oldX][oldY] + " NEW: " + this.level[newX][newY]);
-        	System.out.println("CASCADE CALL");
-            startCascade(oldX, oldY, moveDir);
+            startCascade(oldX, oldY, moveDir); // Calls a method that deals with Entity around mover
+
+            // If we have a falling Entity like Boulders we keep going, handleInteraction will know when to stop
             if(this.level[newX][newY].getAttribute(Attribute.falling) && moveDir == Direction.DOWN)
             {
-            	System.out.println("Still Moving...");
                 moveEntity(newX, newY, newX, newY + 1, Direction.DOWN);
             }
         }
@@ -302,6 +297,8 @@ import entity.*;
         switch (counter) {
             case DIAMOND:
                 this.counterDiamondLeft = newValue;
+
+                // If we pick up the last diamond we need to open the Exit()
                 if (newValue <= 0)
                 {
                     int exitX = getEntityX(this.exit);
@@ -359,14 +356,20 @@ import entity.*;
 
         	if (subject.getAttribute(Attribute.collectable))
             {
-                // @TODO add check for diamond before chaning score
-                setCounter(CounterType.DIAMOND, getCounter(CounterType.DIAMOND) - 1);
-                // @TODO add check for exit and end game
+                if(subject instanceof Diamond)
+                {
+                    setCounter(CounterType.DIAMOND, getCounter(CounterType.DIAMOND) - 1);
+                }
+                if(subject instanceof Exit)
+                {
+                    //endGame(gameStage.WIN); //Controller Class function to end game
+                }
             }
             if (subject.getAttribute(Attribute.lethal))
             {
-                // @TODO end game kill/delete player?
- 
+                deleteEntity(actor);
+                setPlayer(null);
+                //endGame(gameStage.DEAD);
             }
             if (subject.getAttribute(Attribute.breakable))
             {
@@ -390,10 +393,15 @@ import entity.*;
             }
             else 
             {
+                // If the actor is heavy (like Boulder) and subject is crushable (like Player)
                 if (subject.getAttribute(Attribute.crushable) && actor.getAttribute(Attribute.heavy))
                 {
-                    // @TODO end game kill/delete crushable
-                    // @TODO if player end game?
+                    deleteEntity(subject);
+                    if (subject instanceof Player)
+                    {
+                        setPlayer(null);
+                        //endGame(gameStage.DEAD);           
+                    }
                 }
                 return true;
             }
@@ -417,14 +425,20 @@ import entity.*;
 
         	if (subject.getAttribute(Attribute.collectable))
             {
-                // @TODO add check for diamond before chaning score
-                setCounter(CounterType.DIAMOND, getCounter(CounterType.DIAMOND) - 1);
-                // @TODO add check for exit and end game
+                if(subject instanceof Diamond)
+                {
+                    setCounter(CounterType.DIAMOND, getCounter(CounterType.DIAMOND) - 1);
+                }
+                if(subject instanceof Exit)
+                {
+                    //endGame(gameStage.WIN); //Controller Class function to end game
+                }
             }
             if (subject.getAttribute(Attribute.lethal))
             {
-                // @TODO end game kill/delete player?
- 
+                deleteEntity(actor);
+                setPlayer(null);
+                //endGame(gameStage.DEAD);
             }
             if (subject.getAttribute(Attribute.breakable))
             {
@@ -448,10 +462,15 @@ import entity.*;
             }
             else 
             {
+                // If the actor is heavy (like Boulder) and subject is crushable (like Player)
                 if (subject.getAttribute(Attribute.crushable) && actor.getAttribute(Attribute.heavy))
                 {
-                    // @TODO end game kill/delete crushable
-                    // @TODO if player end game?
+                    deleteEntity(subject);
+                    if (subject instanceof Player)
+                    {
+                        setPlayer(null);
+                        //endGame(gameStage.DEAD);           
+                    }
                 }
                 return true;
             }
@@ -467,21 +486,16 @@ import entity.*;
     */
     public void handleRolling(int checkPointX, int checkPointY)
     {
+        // Rolls either right or left
         if(this.level[checkPointX + 1][checkPointY] instanceof Hole && this.level[checkPointX + 1][checkPointY + 1] instanceof Hole)
         {
-        	System.out.println("ROLL 1");
             moveEntity(checkPointX, checkPointY, checkPointX + 1, checkPointY, Direction.RIGHT);
-            System.out.println("ROLL 2");
             moveEntity(checkPointX + 1, checkPointY, checkPointX + 1, checkPointY + 1, Direction.DOWN);
-            System.out.println("ROLL OUT");
         }
         else if(this.level[checkPointX - 1][checkPointY] instanceof Hole && this.level[checkPointX - 1][checkPointY + 1] instanceof Hole)
         {
-        	System.out.println("ROLL 1-2");
         	moveEntity(checkPointX, checkPointY, checkPointX - 1, checkPointY, Direction.LEFT);
-        	System.out.println("ROLL 2-2");
             moveEntity(checkPointX - 1, checkPointY, checkPointX - 1, checkPointY + 1, Direction.DOWN);
-            System.out.println("ROLL OUT");
         }
     }
 
@@ -493,27 +507,22 @@ import entity.*;
     */
     public void handleCascade(Point checkPoint)
     {
-    	System.out.println("CASCADE IN");
-    	System.out.println("checkPoint - " + checkPoint);
     	int checkPointX = (int) checkPoint.getX();
-    	int checkPointY = (int) checkPoint.getY();
-    	System.out.println("checkPointX - " + checkPointX);
-    	System.out.println("checkPointY - " + checkPointY);
+        int checkPointY = (int) checkPoint.getY();
+        
+        // Check for
     	if (checkPointX < 0 || checkPointY < 0)
     	{
-    		System.out.println("CASCADE FAIL");
-    		return;
+            return;
+            // @TODO check for bottom of map as well
     	}
-    	System.out.println("What Cascades? - " + this.level[checkPointX][checkPointY]);
 
         if(this.level[checkPointX][checkPointY].getAttribute(Attribute.falling))
         {
-        	System.out.println("FALLING");
             moveEntity(checkPointX, checkPointY, checkPointX, checkPointY + 1, Direction.DOWN);
         }
         if(this.level[checkPointX][checkPointY].getAttribute(Attribute.rolling) && this.level[checkPointX][checkPointY + 1].getAttribute(Attribute.rolling))
         {
-        	System.out.println("ROLLING");
         	handleRolling(checkPointX, checkPointY);
         }
         
@@ -532,6 +541,7 @@ import entity.*;
         Entity actor = this.level[actX][actY];
         Point actPoint = actor.getPosition();
 
+        // Gets all points above and to each side of actor
         Point NP = new Point(actPoint);
         NP.translate(0, -1);
         Point WP = new Point(actPoint);
@@ -542,53 +552,30 @@ import entity.*;
         NWP.translate(-1, -1);
         Point NEP = new Point(actPoint);
         NEP.translate(1, -1);
-        
-    	System.out.println("CASCADE START");
-    	System.out.println("PointStart - " + actPoint);
-    	System.out.println("11, 9 CHECK - " + this.level[11][9]);
 
-        
+        // calls handleCascade() on all relevant points based on move direction
         switch (moveDir) {
             case UP:
-            	System.out.println("UP");
-                System.out.println("Starting WP - " + WP);
                 handleCascade(WP);
-                System.out.println("Starting EP - " + EP);
                 handleCascade(EP);
-                System.out.println("Starting NWP - " + NWP);
                 handleCascade(NWP);
-                System.out.println("Starting NEP - " + NEP);
                 handleCascade(NEP);
                 break;
             case DOWN:
-            	System.out.println("NORTH");
-            	System.out.println("Starting NP - " + NP);
                 handleCascade(NP);
-                System.out.println("Starting WP - " + WP);
                 handleCascade(WP);
-                System.out.println("Starting EP - " + EP);
                 handleCascade(EP);
-                System.out.println("Starting NWP - " + NWP);
                 handleCascade(NWP);
-                System.out.println("Starting NEP - " + NEP);
                 handleCascade(NEP);
                 break;
             case LEFT:
-            	System.out.println("LEFT");
-            	System.out.println("Starting NP - " + NP);
                 handleCascade(NP);
-                System.out.println("Starting EP - " + EP);
                 handleCascade(EP);
-                System.out.println("Starting NEP - " + NEP);
                 handleCascade(NEP);
                 break;
             case RIGHT:
-            	System.out.println("RIGHT");
-            	System.out.println("Starting NP - " + NP);
                 handleCascade(NP);
-                System.out.println("Starting WP - " + WP);
                 handleCascade(WP);
-                System.out.println("Starting NWP - " + NWP);
                 handleCascade(NWP);
                 break;
             default:
@@ -616,56 +603,33 @@ import entity.*;
         NWP.translate(-1, -1);
         Point NEP = new Point(actPoint);
         NEP.translate(1, -1);
-        
-        System.out.println("CASCADE START");
-    	System.out.println("PointStart - " + actPoint);
-    	System.out.println("11, 9 CHECK - " + this.level[11][9]);
 
         switch (moveDir) {
-        case UP:
-        	System.out.println("UP");
-            System.out.println("Starting WP - " + WP);
-            handleCascade(WP);
-            System.out.println("Starting EP - " + EP);
-            handleCascade(EP);
-            System.out.println("Starting NWP - " + NWP);
-            handleCascade(NWP);
-            System.out.println("Starting NEP - " + NEP);
-            handleCascade(NEP);
-            break;
-        case DOWN:
-        	System.out.println("NORTH");
-        	System.out.println("Starting NP - " + NP);
-            handleCascade(NP);
-            System.out.println("Starting WP - " + WP);
-            handleCascade(WP);
-            System.out.println("Starting EP - " + EP);
-            handleCascade(EP);
-            System.out.println("Starting NWP - " + NWP);
-            handleCascade(NWP);
-            System.out.println("Starting NEP - " + NEP);
-            handleCascade(NEP);
-            break;
-        case LEFT:
-        	System.out.println("LEFT");
-        	System.out.println("Starting NP - " + NP);
-            handleCascade(NP);
-            System.out.println("Starting EP - " + EP);
-            handleCascade(EP);
-            System.out.println("Starting NEP - " + NEP);
-            handleCascade(NEP);
-            break;
-        case RIGHT:
-        	System.out.println("RIGHT");
-        	System.out.println("Starting NP - " + NP);
-            handleCascade(NP);
-            System.out.println("Starting WP - " + WP);
-            handleCascade(WP);
-            System.out.println("Starting NWP - " + NWP);
-            handleCascade(NWP);
-            break;
-        default:
-            break;
+            case UP:
+                handleCascade(WP);
+                handleCascade(EP);
+                handleCascade(NWP);
+                handleCascade(NEP);
+                break;
+            case DOWN:
+                handleCascade(NP);
+                handleCascade(WP);
+                handleCascade(EP);
+                handleCascade(NWP);
+                handleCascade(NEP);
+                break;
+            case LEFT:
+                handleCascade(NP);
+                handleCascade(EP);
+                handleCascade(NEP);
+                break;
+            case RIGHT:
+                handleCascade(NP);
+                handleCascade(WP);
+                handleCascade(NWP);
+                break;
+            default:
+                break;
         }
     }
     
