@@ -57,7 +57,8 @@ public class GameHandlerTest {
 
 	@Test
 	public void testGameHandler() {
-		fail("Not yet implemented");
+		GameHandler testGame = new GameHandler();
+		assertNotNull(testGame);
 	}
 	
 	@Test

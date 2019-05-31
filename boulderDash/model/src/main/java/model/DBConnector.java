@@ -25,7 +25,7 @@ public class DBConnector {
 	
 	private static String userDB = "root";
 	private static String passDB="";
-	private static String urlDB="jdbc:mysql://localhost:3306/boulderDash"; //@TODOPut the URL of the DataBase.
+	private static String urlDB="jdbc:mysql://localhost:3306/boulderDashDB"; //@TODOPut the URL of the DataBase.
 	
 	private Connection connection;
 	private Statement statement;
@@ -148,7 +148,7 @@ public class DBConnector {
      *          
      */
 	
-	public Integer executeUpdate(String query){
+	public int executeUpdate(String query){
 		try {
             return this.statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
         } catch (final SQLException e) {

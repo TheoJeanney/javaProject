@@ -35,7 +35,7 @@ import entity.*;
     public GameHandler()
     {
         // @TODO define parameters
-        //setLevel(new Entity[40][20]);
+        setLevel(new Entity[40][20]);
         // @TODO get count of stage entities stored in DB with stored procedure
         /*ResultSet tempSet;  
         while (tempSet.next())
