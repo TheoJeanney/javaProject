@@ -48,15 +48,25 @@ public final class View implements IView, Runnable {
      */
     public static ControllerOrder keyCodeToControllerOrder(final int keyCode) {
         switch (keyCode) {
+        
             case KeyEvent.VK_LEFT:
+            	
                 return ControllerOrder.LEFT;
+                
             case KeyEvent.VK_RIGHT:
+            	
                 return ControllerOrder.RIGHT;
+                
             case KeyEvent.VK_UP:
+            	
                 return ControllerOrder.UP;
+                
             case KeyEvent.VK_DOWN:
+            	
                 return ControllerOrder.DOWN;
+                
             default:
+            	
                 return null;
         }
     }
