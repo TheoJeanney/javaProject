@@ -103,9 +103,9 @@ public abstract class Entity {
      * @param confirmExplode , true of false.
      *          
      */
-	public void setAttribute(Attribute choice, boolean confirmExplode){
+	public void setAttribute(Attribute choice, boolean confirmAttribute){
 		
-		this.attributeSet.put(choice, confirmExplode);
+		this.attributeSet.put(choice, confirmAttribute);
 	}
 	
 	/**

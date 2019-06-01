@@ -1,12 +1,8 @@
 package model;
 
-
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 /**
  * <h1>DBConnector Class </h1>
@@ -27,150 +23,48 @@ public class DBConnector {
 	private static String passDB="";
 	private static String urlDB="jdbc:mysql://localhost:3306/boulderDashDB"; //@TODOPut the URL of the DataBase.
 	
-	private Connection connection;
-	private Statement statement;
-	private static DBConnector instance;
-	
+	private static DBConnector DBConnector = null;
+
 	/**
      * Method that open the connection.
      *   
      *          
      */
-	public DBConnector(){
-		this.isOpen();
-	}
-	
-	/**
-     * Method that connect dataBase with JavaCode.
-     * 
-     * @return if the connection is good, return true.   
-     *          
-     */
-	public boolean isOpen(){
-		try {
-			
-			this.connection = DriverManager.getConnection(DBConnector.urlDB,DBConnector.userDB,DBConnector.passDB);
-			this.statement = this.connection.createStatement();
-			return true;
-			
-		} catch (SQLException e)
+	public DBConnector() 
+	{
+		try 
 		{
-			e.printStackTrace();
+		    Class.forName("com.mysql.cj.jdbc.Driver");    
 		}
-		return false;
-		
-	}
-	/**
-     * Method that set the Instance
-     *
-     * @param instance ,      
-     *          
-     */
-	public static void setInstance(DBConnector instance){
-		DBConnector.instance = instance;
-	}
-	
-	/**
-     * Method that get the instance
-
-     * @return the choice of the attribute.      
-     *          
-     */
-	public static DBConnector getInstance(){
-		return DBConnector.instance;
-		
-	}
-	
-	/**
-     * Method that set the connection.    
-     * 
-     * @param connection , 
-     */
-	
-	public void setConnection(Connection connection) {
-		this.connection = connection;
-		
-	}
-	
-	/**
-     * Method that get the connection.
-
-     * @return the connection.   
-     *          
-     */
-	
-	public Connection getConnection(){
-		
-		return this.connection;
-	}
-	
-	/**
-     * Method that set the statement.     
-     *          
-     */
-	
-	public void setStatement(Statement statement){
-		this.statement = statement;
-	}
-	
-	/**
-     * Method that get the instance
-
-     * @return the choice of the attribute.      
-     *          
-     */
-	
-	public Statement getStatement(){
-		return this.statement;
-	}
-	
-	/**
-     * Method that get the instance
-
-     * @return the choice of the attribute.      
-     *          
-     */
-	
-	public ResultSet executeQuery (String query){
-		try {
-			return this.getStatement().executeQuery(query);
-		} catch (SQLException e)
+		catch (ClassNotFoundException e) 
 		{
-			e.printStackTrace();
+		    // TODO Auto-generated catch block
+		    e.printStackTrace();
 		}
-		return null;
 	}
 	
-	/**
-     * Method that get the instance
-
-     * @return the choice of the attribute.      
-     *          
-     */
-	
-	public int executeUpdate(String query){
-		try {
-            return this.statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
-        } catch (final SQLException e) {
-            e.printStackTrace();
-        }
-        return 0;
-	}
 	
 	/**
-     * Method that get the instance
-
-     * @return the choice of the attribute.      
-     *          
+     * <h1>getConnection Method</h1>
+     * establishes a connection if needed and returns that connection
+     * 
+     * @return stored/established connection
+     * @throws SQLException           
      */
-	
-	public CallableStatement prepareCall(String query){
-		try {
-            return this.getConnection().prepareCall(query);
-        } catch (final SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+	public Connection getConnection() throws SQLException 
+	{
+		Connection conn = null;
+		conn = DriverManager.getConnection(urlDB, userDB, passDB);
+		return conn;
+	}	
+
+	public static DBConnector getInstance() 
+	{
+		if (DBConnector == null) 
+		{
+			DBConnector = new DBConnector();
+		}
+		return DBConnector;
 	}
 
 }

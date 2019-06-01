@@ -11,10 +11,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class DBConnectorTest {
+public class DAOHandlerTest {
 	
-	DBConnector DBconnect = new DBConnector();
-
+	DAOHandler DAO = new DAOHandler();
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -33,36 +32,23 @@ public class DBConnectorTest {
 	}
 
 	@Test
-	public void testDBConnector() {
+	public void testExecuteQuery() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testIsOpen() {
-		fail("Not yet implemented");
-	}
-
-
-	@Test
-	public void testGetInstance() {
-		fail("Not yet implemented");
-	}
-
-
-	@Test
-	public void testGetConnection() {
-		fail("Not yet implemented");
-	}
-
-
-	@Test
-	public void testGetStatement() {
+	public void testExecuteUpdate() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testExecuteQuery() throws SQLException {
-		fail("Not yet implemented");
+	public void testPrepareCall() throws SQLException {
+		ResultSet rs = DAO.getEntityPlacement(GameLevels.LevelOne);
+		while (rs.next())
+		{
+			String entityName = rs.getString("entName");
+			System.out.println(entityName + "\n");
+			assertNotNull(entityName);
+		}
 	}
-
 }

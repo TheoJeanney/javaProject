@@ -1,8 +1,6 @@
 package entity;
 
 import java.awt.Point;
-import java.awt.image.BufferedImage;
-
 /**
  * <h1>Hole Class</h1>
  * The dirt when the player walk on.

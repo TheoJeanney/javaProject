@@ -1,5 +1,11 @@
 package model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.CallableStatement;
+
 /**
  * <h1>DAOHandler Class </h1>
  * 
@@ -8,41 +14,50 @@ package model;
 * @version 9.2
 * @since 0.9.0
 */
-
-import java.sql.CallableStatement;
-import java.sql.ResultSet;
-
-public class DAOHandler {
+public class DAOHandler 
+{
+	Connection connection = null;
+	PreparedStatement prepStmt = null;
+	ResultSet resultSet = null;
 	
-	  /**
-     * Execute query.
-     *
-     * @param query
-     *            the query
-     * @return the result set
-     */
-	protected static ResultSet executeQuery(String query){
-		return DBConnector.getInstance().executeQuery(query);
+	public DAOHandler()
+	{
 		
 	}
-	 /**
-     * Execute update.
-     *
-     * @param query
-     *            the query
-     * @return the int
-     */
-	protected static Integer executeUpdate(String query){
-		return DBConnector.getInstance().executeUpdate(query);
+	
+	private Connection getConnection() throws SQLException
+	{
+		Connection conn;
+		conn = DBConnector.getInstance().getConnection();
+		return conn;
 	}
-	 /**
-     * Prepare call.
-     *
-     * @param query
-     *            the query
-     * @return the callable statement
-     */
-	protected static CallableStatement prepareCall(String query){
-		return DBConnector.getInstance().prepareCall(query);
+	
+	
+	
+	public ResultSet getEntityPlacement(GameLevels choiceLevel)
+	{
+		try {
+			String StringChoiceLevel = choiceLevel.toString();
+			ResultSet rs = getConnection().createStatement().executeQuery("call getEntityPlacement('" + StringChoiceLevel + "')");
+			return rs;
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public ResultSet getAnimationSprite(GameEntities choiceEntity, EntityAnimation choiceAnim)
+	{
+		try {
+			String StringChoiceEntity = choiceEntity.toString();
+			String StringChoiceAnim = choiceAnim.toString();
+			ResultSet rs = getConnection().createStatement().executeQuery("call getEntityPlacement('" + StringChoiceEntity + "','" + StringChoiceAnim + "')");
+			return rs;
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.Point;
 import entity.*;
 
@@ -24,6 +25,7 @@ import entity.*;
     private int counterDiamondLeft;
     private int counterScore;
     private int counterTime; // Time in seconds stored as an int
+    private DAOHandler DAO = new DAOHandler();
 
     //private static enum coordinateType {x,y};
 
@@ -31,56 +33,74 @@ import entity.*;
     * <h1>GameHandler Constructor</h1>
     *
     */
-    public GameHandler()
+    public GameHandler(GameLevels choiceLevel)
     {
         // @TODO define parameters
-        setLevel(new Entity[40][20]);
+        setLevel(new Entity[19][30]);
         // @TODO get count of stage entities stored in DB with stored procedure
-        ResultSet tempSet;  // @TODO put DBConnector ResultSet here
-        while (tempSet.next())
+		ResultSet rs = DAO.getEntityPlacement(GameLevels.LevelOne);
+        try 
         {
-            int entityX = tempSet.getInt("enpX");
-            int entityY = tempSet.getInt("enpY");
-
-            // @TODO go through each entry in a level entity placmetn query
-            switch (tempSet.getString("entName")) 
-            { // @TODO change this to a function that gives me
-                case "Hole":
-                    placeEntity(new Hole(entityX, entityY), entityX, entityY);
-                    break;
-                case "Dirt":
-                    placeEntity(new Dirt(entityX, entityY), entityX, entityY);
-                    break;
-                case "Wall":
-                    placeEntity(new Wall(entityX, entityY), entityX, entityY);
-                    break;
-                case "Boulder":
-                    placeEntity(new Boulder(entityX, entityY), entityX, entityY);
-                    break;
-                case "Diamond":
-                    placeEntity(new Diamond(entityX, entityY), entityX, entityY);
-                    break;
-                case "Player":
-                    this.player = new Player(entityX, entityY);
-                    placeEntity(this.player, entityX, entityY);
-                    break;
-                case "Exit":
-                    this.exit = new Exit(entityX, entityY);
-                    placeEntity(new Wall(entityX, entityY), entityX, entityY);
-                    break;
-                case "Mole":
-                    placeEntity(new Mole(entityX, entityY), entityX, entityY);
-                    break;
-                case "BoomMole":
-                    placeEntity(new BoomMole(entityX, entityY), entityX, entityY);
-                    break;
-                default:
-                    break;
-            }
-        }
-        setCounter(CounterType.DIAMOND, 0); // @TODO change 0 to function that gets stage diamond from DB
-        setCounter(CounterType.TIME, 0); // @TODO change 0 to function that gets stage time from DB
-        setCounter(CounterType.SCORE, 0);
+			while (rs.next())
+			{
+				
+			    // @TODO go through each entry in a level entity placmetn query
+				int isInvincible = rs.getInt("enpInvincible");
+				int lvlDiamondLeft = rs.getInt("lvlDiamondLeft");
+				int lvlTime = rs.getInt("lvlTime");
+				int entityX = rs.getInt("enpX");
+			    int entityY = rs.getInt("enpY");
+				switch (rs.getString("entName")) 
+				{ // @TODO change this to a function that gives me
+				    case "Hole":
+				        placeEntity(new Hole(entityX, entityY), entityX, entityY);
+				        break;
+				    case "Dirt":
+				        placeEntity(new Dirt(entityX, entityY), entityX, entityY);
+				        break;
+				    case "Wall":
+				        placeEntity(new Wall(entityX, entityY), entityX, entityY);
+				        break;
+				    case "Boulder":
+				        placeEntity(new Boulder(entityX, entityY), entityX, entityY);
+				        break;
+				    case "Diamond":
+				        placeEntity(new Diamond(entityX, entityY), entityX, entityY);
+				        break;
+				    case "Player":
+				        this.player = new Player(entityX, entityY);
+				        placeEntity(this.player, entityX, entityY);
+				        break;
+				    case "Exit":
+				        this.exit = new Exit(entityX, entityY);
+				        placeEntity(new Wall(entityX, entityY), entityX, entityY);
+				        break;
+				    case "Mole":
+				        placeEntity(new Mole(entityX, entityY), entityX, entityY);
+				        break;
+				    case "BoomMole":
+				        placeEntity(new BoomMole(entityX, entityY), entityX, entityY);
+				        break;
+				    default:
+				        break;
+				}
+				if(isInvincible == 1) { getEntity(entityX, entityY).setInvincible(); }
+				setCounter(CounterType.DIAMOND, lvlDiamondLeft); // @TODO change 0 to function that gets stage diamond from DB
+		        setCounter(CounterType.TIME, lvlTime); // @TODO change 0 to function that gets stage time from DB
+		        setCounter(CounterType.SCORE, 0);
+			}
+		} 
+        catch (SQLException e) 
+        {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}
+    }
+    
+    public GameHandler()
+    {
+    	
     }
     
 	/**
@@ -155,7 +175,7 @@ import entity.*;
     */
     public Entity getEntity(int entityX, int entityY) 
     {
-        return this.level[entityX][entityY];
+        return this.level[entityY][entityX];
     }
 
     /**
@@ -168,7 +188,7 @@ import entity.*;
     */
     public void placeEntity(Entity newEntity, int entityX, int entityY) 
     {
-        this.level[entityX][entityY] = newEntity;
+        this.level[entityY][entityX] = newEntity;
         newEntity.setPosition(entityX, entityY);
     }
 
@@ -181,11 +201,10 @@ import entity.*;
     */
     public void deleteEntity(int entityX, int entityY) 
     {
-    	Entity oldEntity = this.level[entityX][entityY];
-    	this.level[entityX][entityY] = new Hole(entityX, entityY);
+    	Entity oldEntity = getEntity(entityX,entityY);
+    	this.level[entityY][entityX] = new Hole(entityX, entityY);
         if (oldEntity instanceof Player)
         {
-            deleteEntity(oldEntity);
             setPlayer(null);
             //endGame(gameStage.DEAD); //Controller Class function to end game
         }
@@ -199,7 +218,7 @@ import entity.*;
     */
     public void deleteEntity(Entity oldEntity) 
     {
-        this.level[getEntityX(oldEntity)][getEntityY(oldEntity)] = new Hole(oldEntity.getPosition());
+        this.level[getEntityY(oldEntity)][getEntityX(oldEntity)] = new Hole(oldEntity.getPosition());
         if (oldEntity instanceof Player)
         {
             deleteEntity(oldEntity);
@@ -223,12 +242,12 @@ import entity.*;
         // handleInteraction() allows us to deal with interaction between mover and the object in front of them
         if(handleInteraction(oldX, oldY, newX, newY))
         {
-            this.level[newX][newY] = this.level[oldX][oldY];
+            this.level[newY][newX] = getEntity(oldX,oldY);
             deleteEntity(oldX, oldY);
             startCascade(oldX, oldY, moveDir); // Calls a method that deals with Entity around mover
 
             // If we have a falling Entity like Boulders we keep going, handleInteraction will know when to stop
-            if(this.level[newX][newY].getAttribute(Attribute.falling) && moveDir == Direction.DOWN)
+            if(getEntity(newY,newX).getAttribute(Attribute.falling) && moveDir == Direction.DOWN)
             {
                 moveEntity(newX, newY, newX, newY + 1, Direction.DOWN);
             }
@@ -253,10 +272,10 @@ import entity.*;
         {
         	int oldX = getEntityX(movingEntity);
         	int oldY = getEntityY(movingEntity);
-            this.level[newX][newY] = this.level[getEntityX(movingEntity)][getEntityY(movingEntity)];
+            this.level[newY][newX] = getEntity(getEntityX(movingEntity),getEntityY(movingEntity));
             deleteEntity(oldX, oldY);
             startCascade(oldX, oldY, moveDir);
-            if(this.level[newX][newY].getAttribute(Attribute.falling) && moveDir == Direction.DOWN)
+            if(getEntity(newX,newY).getAttribute(Attribute.falling) && moveDir == Direction.DOWN)
             {
                 moveEntity(newX, newY, newX, newY + 1, Direction.DOWN);
             }
@@ -349,8 +368,8 @@ import entity.*;
     */
     public boolean handleInteraction(int actX, int actY, int sbjX, int sbjY) 
     {
-    	Entity actor = this.level[actX][actY];
-    	Entity subject = this.level[sbjX][sbjY];
+    	Entity actor = getEntity(actX,actY);
+    	Entity subject = getEntity(sbjX,sbjY);
         if (actor instanceof Player)
         {
 
@@ -419,7 +438,7 @@ import entity.*;
     */
     public boolean handleInteraction(Entity actor, int sbjX, int sbjY) // @TODO change to subject object based
     {
-    	Entity subject = this.level[sbjX][sbjY];
+    	Entity subject = getEntity(sbjX,sbjY);
         if (actor instanceof Player)
         {
 
@@ -487,12 +506,12 @@ import entity.*;
     public void handleRolling(int checkPointX, int checkPointY)
     {
         // Rolls either right or left
-        if(this.level[checkPointX + 1][checkPointY] instanceof Hole && this.level[checkPointX + 1][checkPointY + 1] instanceof Hole)
+        if(getEntity(checkPointX + 1,checkPointY) instanceof Hole && getEntity(checkPointX + 1,checkPointY + 1) instanceof Hole)
         {
             moveEntity(checkPointX, checkPointY, checkPointX + 1, checkPointY, Direction.RIGHT);
             moveEntity(checkPointX + 1, checkPointY, checkPointX + 1, checkPointY + 1, Direction.DOWN);
         }
-        else if(this.level[checkPointX - 1][checkPointY] instanceof Hole && this.level[checkPointX - 1][checkPointY + 1] instanceof Hole)
+        else if(getEntity(checkPointX - 1,checkPointY) instanceof Hole && getEntity(checkPointX - 1,checkPointY + 1) instanceof Hole)
         {
         	moveEntity(checkPointX, checkPointY, checkPointX - 1, checkPointY, Direction.LEFT);
             moveEntity(checkPointX - 1, checkPointY, checkPointX - 1, checkPointY + 1, Direction.DOWN);
@@ -517,11 +536,11 @@ import entity.*;
             // @TODO check for bottom of map as well
     	}
 
-        if(this.level[checkPointX][checkPointY].getAttribute(Attribute.falling))
+        if(getEntity(checkPointX,checkPointY).getAttribute(Attribute.falling))
         {
             moveEntity(checkPointX, checkPointY, checkPointX, checkPointY + 1, Direction.DOWN);
         }
-        if(this.level[checkPointX][checkPointY].getAttribute(Attribute.rolling) && this.level[checkPointX][checkPointY + 1].getAttribute(Attribute.rolling))
+        if(getEntity(checkPointX,checkPointY).getAttribute(Attribute.rolling) && getEntity(checkPointX,checkPointY + 1).getAttribute(Attribute.rolling))
         {
         	handleRolling(checkPointX, checkPointY);
         }
@@ -538,7 +557,7 @@ import entity.*;
     */
     public void startCascade(int actX, int actY, Direction moveDir)
     {
-        Entity actor = this.level[actX][actY];
+        Entity actor = getEntity(actX,actY);
         Point actPoint = actor.getPosition();
 
         // Gets all points above and to each side of actor

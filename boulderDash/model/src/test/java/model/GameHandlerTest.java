@@ -26,8 +26,8 @@ public class GameHandlerTest {
 	Entity testHole = new Hole(22,2);
 	Entity testPlayer = new Player(0,2);
 	Entity testExit = new Exit(0,5);
-	Entity[][] testMaxtrix = new Entity[40][20];
-	Entity[][] testMaxtrix2 = new Entity[40][20];
+	Entity[][] testMaxtrix = new Entity[40][30];
+	Entity[][] testMaxtrix2 = new Entity[40][30];
 	Entity[][] interMaxtrix = new Entity[50][50];
 	Entity[][] cascMaxtrix = new Entity[50][50];
 
@@ -48,18 +48,64 @@ public class GameHandlerTest {
 		game.setLevel(testMaxtrix2);
 		gameInter.setLevel(interMaxtrix);
 		gameCasc.setLevel(cascMaxtrix);
-
 	}
 
 	@After
 	public void tearDown() throws Exception {
 	}
+	
+	@Test
+	public void testGameLoop() {
+		GameHandler testGame = new GameHandler(GameLevels.LevelOne);
+		System.out.println(testGame.getEntity(29,0));
+		for (int i = 0; i < testGame.getLevel().length; i++) 
+		{
+			System.out.println("");
+			for (int j = 0; j < testGame.getLevel()[i].length; j++)
+			{
+				if (testGame.getEntity(j,i) instanceof Player) 
+				{
+					System.out.print("* "); 
+				}
+				else
+				{
+					System.out.print(testGame.getEntity(j,i).getClass().getSimpleName().charAt(0) + " "); 
+				}
+				/*if (testGame.getEntity(i,j) instanceof Player) 
+				{
+					System.out.print("@ "); 
+				}
+				else
+				{
+					System.out.print(testGame.getEntity(i,j).getClass().getSimpleName().charAt(0) + " "); 
+				}*/
+			}
+		}
+		testGame.moveEntity(testGame.getPlayer(),(int) testGame.getPlayer().getPosition().getX(),(int) testGame.getPlayer().getPosition().getY() - 1, Direction.UP);
+		System.out.println("");
+		System.out.println("--------------------------------------------------------");
+		for (int i = 0; i < testGame.getLevel().length; i++) 
+		{
+			System.out.println("");
+			for (int j = 0; j < testGame.getLevel()[i].length; j++)
+			{
+				if (testGame.getEntity(j,i) instanceof Player) 
+				{
+					System.out.print("* "); 
+				}
+				else
+				{
+					System.out.print(testGame.getEntity(j,i).getClass().getSimpleName().charAt(0) + " "); 
+				}
+			}
+		}
+	}
 
 	@Test
 	public void testGameHandler() {
-		GameHandler testGame = new GameHandler();
-		assertNotNull(testGame);
-	}
+		GameHandler testGame = new GameHandler(GameLevels.LevelOne);
+		//System.out.println(testGame.getEntity(0, 1));
+	}	
 	
 	@Test
 	public void testGetPlayer() {
@@ -299,7 +345,6 @@ public class GameHandlerTest {
 		gameCasc.placeEntity(new Dirt(11,13), 11,13);
 		assertEquals(expected, gameCasc.getEntity(11, 11));
 		gameCasc.startCascade(11,11,Direction.UP);
-		System.out.println(gameCasc.getEntity(11, 12));
 		assertTrue(gameCasc.getEntity(11, 12) instanceof Boulder);	}
 	
 	@Test
@@ -321,7 +366,6 @@ public class GameHandlerTest {
 		gameCasc.placeEntity(new Dirt(11,13), 11,13);
 		assertEquals(expected, gameCasc.getEntity(11, 11));
 		gameCasc.startCascade(11,11,Direction.UP);
-		System.out.println(gameCasc.getEntity(11, 12));
 		assertTrue(gameCasc.getEntity(11, 12) instanceof Boulder);
 	}
 
@@ -340,8 +384,6 @@ public class GameHandlerTest {
 		gameCasc.placeEntity(new Dirt(1,2), 1,2);
 		assertEquals(expected, gameCasc.getEntity(1, 1));
 		gameCasc.startCascade(1,1,Direction.LEFT);
-		System.out.println(gameCasc.getEntity(1, 0));
-		System.out.println(gameCasc.getEntity(1, 1));
 		assertTrue(gameCasc.getEntity(1, 1) instanceof Boulder);
 	}
 
@@ -365,11 +407,7 @@ public class GameHandlerTest {
 		gameCasc.placeEntity(new Dirt(12,12), 12,12);
 		gameCasc.placeEntity(new Dirt(11,12), 11,12);
 		assertEquals(expected, gameCasc.getEntity(11, 11));
-		System.out.println(cascadeHole.getPosition());
 		gameCasc.startCascade(cascadeHole,Direction.LEFT);
-		System.out.println(gameCasc.getEntity(11, 9));
-		System.out.println(gameCasc.getEntity(11, 10));
-		System.out.println(gameCasc.getEntity(11, 11));
 		assertTrue(gameCasc.getEntity(11, 10) instanceof Boulder);
 		assertTrue(gameCasc.getEntity(11, 11) instanceof Boulder);
 	}
