@@ -1,8 +1,8 @@
 package main;
 
 import contract.ControllerOrder;
-import contract.IModel;
 import controller.ControllerGame;
+import model.IModel;
 //import controller.Controller;
 //import model.GameHandler;
 //import model.Model;

@@ -2,7 +2,10 @@ package model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.awt.Point;
+
+import contract.CounterType;
+import contract.GameLevels;
+
 import entity.*;
 
 /**
@@ -109,7 +112,8 @@ import entity.*;
     *
     * @return entity player stored in this.player
     */
-    public Entity getPlayer()
+    
+	public Entity getPlayer()
     {
 		return this.player;
 	}
@@ -120,6 +124,7 @@ import entity.*;
 	*
 	* @param player entity we want to set
 	*/
+	
 	public void setPlayer(Entity player)
 	{
 		this.player = player;
@@ -131,6 +136,7 @@ import entity.*;
     *
     * @return boolean weather or not we find a player
     */
+	
 	public boolean playerIsAlive()
 	{
 		if(this.player instanceof Player)
@@ -149,6 +155,7 @@ import entity.*;
     *
     * @return entity exit stored in this.exit
     */
+	
 	public Entity getExit()
 	{
 		return this.exit;
@@ -160,6 +167,7 @@ import entity.*;
 	*
 	* @param exit entity we want to set
 	*/
+	
 	public void setExit(Entity exit)
 	{
 		this.exit = exit;
@@ -173,7 +181,8 @@ import entity.*;
     * @param entityY the entities Y position
     * @return entity in matrix
     */
-    public Entity getEntity(int entityX, int entityY) 
+    
+	public Entity getEntity(int entityX, int entityY) 
     {
         return this.level[entityY][entityX];
     }
@@ -186,7 +195,8 @@ import entity.*;
     * @param entityX the entities X position
     * @param entityY the entities Y position
     */
-    public void placeEntity(Entity newEntity, int entityX, int entityY) 
+    
+	public void placeEntity(Entity newEntity, int entityX, int entityY) 
     {
         this.level[entityY][entityX] = newEntity;
         newEntity.setPosition(entityX, entityY);
@@ -199,7 +209,8 @@ import entity.*;
     * @param entityX the entities X position
     * @param entityY the entities Y position
     */
-    public void deleteEntity(int entityX, int entityY) 
+    
+	public void deleteEntity(int entityX, int entityY) 
     {
     	Entity oldEntity = getEntity(entityX,entityY);
     	this.level[entityY][entityX] = new Hole(entityX, entityY);
@@ -216,7 +227,8 @@ import entity.*;
     *
     * @param oldEntity pointer to the entity
     */
-    public void deleteEntity(Entity oldEntity) 
+    
+	public void deleteEntity(Entity oldEntity) 
     {
         this.level[getEntityY(oldEntity)][getEntityX(oldEntity)] = new Hole(oldEntity.getPosition());
         if (oldEntity instanceof Player)
@@ -228,67 +240,13 @@ import entity.*;
     }
 
     /**
-    * <h1>moveEntity Method</h1>
-    * moves Entity objects in level grid-array, using entity and destination coordinates
-    *
-    * @param oldX the entities current X position
-    * @param oldY the entities current Y position
-    * @param newX the entities destination X position
-    * @param newY the entities destination Y position
-    * @param moveDir the Direction the entity want to move
-    */
-    public void moveEntity(int oldX, int oldY, int newX, int newY, Direction moveDir) 
-    {
-        // handleInteraction() allows us to deal with interaction between mover and the object in front of them
-        if(handleInteraction(oldX, oldY, newX, newY))
-        {
-            this.level[newY][newX] = getEntity(oldX,oldY);
-            deleteEntity(oldX, oldY);
-            startCascade(oldX, oldY, moveDir); // Calls a method that deals with Entity around mover
-
-            // If we have a falling Entity like Boulders we keep going, handleInteraction will know when to stop
-            if(getEntity(newY,newX).getAttribute(Attribute.falling) && moveDir == Direction.DOWN)
-            {
-                moveEntity(newX, newY, newX, newY + 1, Direction.DOWN);
-            }
-        }
-
-    }
-    
-    // @TODO add move with just direction and remove direction
-
-    /**
-    * <h1>moveEntity Method</h1>
-    * moves Entity objects in level grid-array, using entity pointer and destination coordinates
-    *
-    * @param movingEntity pointer to the entity
-    * @param newX the entities destination X position
-    * @param newY the entities destination Y position
-    * @param moveDir the Direction the entity want to move
-    */
-    public void moveEntity(Entity movingEntity, int newX, int newY, Direction moveDir) 
-    {
-        if(handleInteraction(movingEntity, newX, newY))
-        {
-        	int oldX = getEntityX(movingEntity);
-        	int oldY = getEntityY(movingEntity);
-            this.level[newY][newX] = getEntity(getEntityX(movingEntity),getEntityY(movingEntity));
-            deleteEntity(oldX, oldY);
-            startCascade(oldX, oldY, moveDir);
-            if(getEntity(newX,newY).getAttribute(Attribute.falling) && moveDir == Direction.DOWN)
-            {
-                moveEntity(newX, newY, newX, newY + 1, Direction.DOWN);
-            }
-        }
-    }
-
-    /**
     * <h1>setLevel Method</h1>
     * passes the an entity array newLevel to the level variable to set this objects current array
     *
     * @param newLevel the level entity array
     */
-    public void setLevel(Entity[][] newLevel) 
+    
+	public void setLevel(Entity[][] newLevel) 
     {
         this.level = newLevel;
     }
@@ -299,7 +257,8 @@ import entity.*;
     *
     * @return entity array containing our stored objects
     */
-    public Entity[][] getLevel()
+    
+	public Entity[][] getLevel()
     {
         return this.level;
     }
@@ -311,7 +270,8 @@ import entity.*;
     * @param counter which counter are we treating
     * @param newValue new value for our counter
     */
-    public void setCounter(CounterType counter, int newValue)
+    
+	public void setCounter(CounterType counter, int newValue)
     {
         switch (counter) {
             case DIAMOND:
@@ -342,7 +302,8 @@ import entity.*;
     * @param counter which counter are we treating
     * @return value of our counter in int
     */
-    public int getCounter(CounterType counter)
+    
+	public int getCounter(CounterType counter)
     {
         switch (counter) {
             case DIAMOND:
@@ -355,302 +316,6 @@ import entity.*;
                 throw new IllegalArgumentException("Asked for counter other than Diamond, Time or Score!");
         }
     }
-
-    /**
-    * <h1>handleInteraction Method</h1>
-    * handles interaction between two entity objects, uses actors X and Y coordinates to determine what happens
-    *
-    * @param actX the actors current X position
-    * @param actY the actors current Y position
-    * @param sbjX the subject current X position
-    * @param sbjY the subject current Y position
-    * @return weather of not an object can move through another object
-    */
-    public boolean handleInteraction(int actX, int actY, int sbjX, int sbjY) 
-    {
-    	Entity actor = getEntity(actX,actY);
-    	Entity subject = getEntity(sbjX,sbjY);
-        if (actor instanceof Player)
-        {
-
-        	if (subject.getAttribute(Attribute.collectable))
-            {
-                if(subject instanceof Diamond)
-                {
-                    setCounter(CounterType.DIAMOND, getCounter(CounterType.DIAMOND) - 1);
-                }
-                if(subject instanceof Exit)
-                {
-                    //endGame(gameStage.WIN); //Controller Class function to end game
-                }
-            }
-            if (subject.getAttribute(Attribute.lethal))
-            {
-                deleteEntity(actor);
-                setPlayer(null);
-                //endGame(gameStage.DEAD);
-            }
-            if (subject.getAttribute(Attribute.breakable))
-            {
-                deleteEntity(subject);
-                return true;
-            }
-            if (subject.getAttribute(Attribute.solid))
-            {
-                return false;
-            }
-            else
-            {
-            	return true;
-            }
-        }
-        else
-        {
-            if (subject.getAttribute(Attribute.solid))
-            {
-                return false;
-            }
-            else 
-            {
-                // If the actor is heavy (like Boulder) and subject is crushable (like Player)
-                if (subject.getAttribute(Attribute.crushable) && actor.getAttribute(Attribute.heavy))
-                {
-                    deleteEntity(subject);
-                    if (subject instanceof Player)
-                    {
-                        setPlayer(null);
-                        //endGame(gameStage.DEAD);           
-                    }
-                }
-                return true;
-            }
-        }
-    }
-
-    /**
-    * <h1>handleInteraction Method</h1>
-    * handles interaction between two entity objects, uses actors X and Y coordinates to determine what happens
-    *
-    * @param actor the entity object
-    * @param sbjX the subject current X position
-    * @param sbjY the subject current Y position
-    * @return weather of not an object can move through another object
-    */
-    public boolean handleInteraction(Entity actor, int sbjX, int sbjY) // @TODO change to subject object based
-    {
-    	Entity subject = getEntity(sbjX,sbjY);
-        if (actor instanceof Player)
-        {
-
-        	if (subject.getAttribute(Attribute.collectable))
-            {
-                if(subject instanceof Diamond)
-                {
-                    setCounter(CounterType.DIAMOND, getCounter(CounterType.DIAMOND) - 1);
-                }
-                if(subject instanceof Exit)
-                {
-                    //endGame(gameStage.WIN); //Controller Class function to end game
-                }
-            }
-            if (subject.getAttribute(Attribute.lethal))
-            {
-                deleteEntity(actor);
-                setPlayer(null);
-                //endGame(gameStage.DEAD);
-            }
-            if (subject.getAttribute(Attribute.breakable))
-            {
-                deleteEntity(subject);
-                return true;
-            }
-            if (subject.getAttribute(Attribute.solid))
-            {
-                return false;
-            }
-            else
-            {
-            	return true;
-            }
-        }
-        else
-        {
-            if (subject.getAttribute(Attribute.solid))
-            {
-                return false;
-            }
-            else 
-            {
-                // If the actor is heavy (like Boulder) and subject is crushable (like Player)
-                if (subject.getAttribute(Attribute.crushable) && actor.getAttribute(Attribute.heavy))
-                {
-                    deleteEntity(subject);
-                    if (subject instanceof Player)
-                    {
-                        setPlayer(null);
-                        //endGame(gameStage.DEAD);           
-                    }
-                }
-                return true;
-            }
-        }
-    }
-    
-    /**
-    * <h1>handleRolling Method</h1>
-    * handles a rollable object rolling check and movement
-    *
-    * @param checkPointX the affected objects current X coordinate
-    * @param checkPointY the affected objects current Y coordinate
-    */
-    public void handleRolling(int checkPointX, int checkPointY)
-    {
-        // Rolls either right or left
-        if(getEntity(checkPointX + 1,checkPointY) instanceof Hole && getEntity(checkPointX + 1,checkPointY + 1) instanceof Hole)
-        {
-            moveEntity(checkPointX, checkPointY, checkPointX + 1, checkPointY, Direction.RIGHT);
-            moveEntity(checkPointX + 1, checkPointY, checkPointX + 1, checkPointY + 1, Direction.DOWN);
-        }
-        else if(getEntity(checkPointX - 1,checkPointY) instanceof Hole && getEntity(checkPointX - 1,checkPointY + 1) instanceof Hole)
-        {
-        	moveEntity(checkPointX, checkPointY, checkPointX - 1, checkPointY, Direction.LEFT);
-            moveEntity(checkPointX - 1, checkPointY, checkPointX - 1, checkPointY + 1, Direction.DOWN);
-        }
-    }
-
-    /**
-    * <h1>handleCascade Method</h1>
-    * handles individual points that are sent by startCascade()
-    *
-    * @param checkPoint the affected objects current position
-    */
-    public void handleCascade(Point checkPoint)
-    {
-    	int checkPointX = (int) checkPoint.getX();
-        int checkPointY = (int) checkPoint.getY();
-        
-        // Check for
-    	if (checkPointX < 0 || checkPointY < 0)
-    	{
-            return;
-            // @TODO check for bottom of map as well
-    	}
-
-        if(getEntity(checkPointX,checkPointY).getAttribute(Attribute.falling))
-        {
-            moveEntity(checkPointX, checkPointY, checkPointX, checkPointY + 1, Direction.DOWN);
-        }
-        if(getEntity(checkPointX,checkPointY).getAttribute(Attribute.rolling) && getEntity(checkPointX,checkPointY + 1).getAttribute(Attribute.rolling))
-        {
-        	handleRolling(checkPointX, checkPointY);
-        }
-        
-    }
-    
-    /**
-    * <h1>start Cascade Method</h1>
-    * starts interaction around the actors X and Y coordinates to determine what happens
-    *
-    * @param actX the actors current X position
-    * @param actY the actors current Y position
-    * @param moveDir the actors move direction
-    */
-    public void startCascade(int actX, int actY, Direction moveDir)
-    {
-        Entity actor = getEntity(actX,actY);
-        Point actPoint = actor.getPosition();
-
-        // Gets all points above and to each side of actor
-        Point NP = new Point(actPoint);
-        NP.translate(0, -1);
-        Point WP = new Point(actPoint);
-        WP.translate(-1, 0);
-        Point EP = new Point(actPoint);
-        EP.translate(1, 0);
-        Point NWP = new Point(actPoint);
-        NWP.translate(-1, -1);
-        Point NEP = new Point(actPoint);
-        NEP.translate(1, -1);
-
-        // calls handleCascade() on all relevant points based on move direction
-        switch (moveDir) {
-            case UP:
-                handleCascade(WP);
-                handleCascade(EP);
-                handleCascade(NWP);
-                handleCascade(NEP);
-                break;
-            case DOWN:
-                handleCascade(NP);
-                handleCascade(WP);
-                handleCascade(EP);
-                handleCascade(NWP);
-                handleCascade(NEP);
-                break;
-            case LEFT:
-                handleCascade(NP);
-                handleCascade(EP);
-                handleCascade(NEP);
-                break;
-            case RIGHT:
-                handleCascade(NP);
-                handleCascade(WP);
-                handleCascade(NWP);
-                break;
-            default:
-                break;
-        }
-    }
-
-    /**
-    * <h1>handleCascade Method</h1>
-    * handles interaction around the actors entity object to determine what happens
-    *
-    * @param actor the actors entity object
-    * @param moveDir the actors move direction
-    */
-    public void startCascade(Entity actor, Direction moveDir)
-    {
-        Point actPoint = actor.getPosition();
-        Point NP = new Point(actPoint);
-        NP.translate(0, -1);
-        Point WP = new Point(actPoint);
-        WP.translate(-1, 0);
-        Point EP = new Point(actPoint);
-        EP.translate(1, 0);
-        Point NWP = new Point(actPoint);
-        NWP.translate(-1, -1);
-        Point NEP = new Point(actPoint);
-        NEP.translate(1, -1);
-
-        switch (moveDir) {
-            case UP:
-                handleCascade(WP);
-                handleCascade(EP);
-                handleCascade(NWP);
-                handleCascade(NEP);
-                break;
-            case DOWN:
-                handleCascade(NP);
-                handleCascade(WP);
-                handleCascade(EP);
-                handleCascade(NWP);
-                handleCascade(NEP);
-                break;
-            case LEFT:
-                handleCascade(NP);
-                handleCascade(EP);
-                handleCascade(NEP);
-                break;
-            case RIGHT:
-                handleCascade(NP);
-                handleCascade(WP);
-                handleCascade(NWP);
-                break;
-            default:
-                break;
-        }
-    }
     
     /**
     * <h1>getEntityX Method</h1>
@@ -659,7 +324,8 @@ import entity.*;
     * @param ent the entity in question
     * @return entity ent's X coordinate
     */
-    public int getEntityX(Entity ent)
+    
+	public int getEntityX(Entity ent)
     {
     	int coordX = (int) ent.getPosition().getX();
     	return coordX;
@@ -672,7 +338,8 @@ import entity.*;
     * @param ent the entity in question
     * @return entity ent's Y coordinate
     */
-    public int getEntityY(Entity ent)
+    
+	public int getEntityY(Entity ent)
     {
     	int coordY = (int) ent.getPosition().getY();
     	return coordY;

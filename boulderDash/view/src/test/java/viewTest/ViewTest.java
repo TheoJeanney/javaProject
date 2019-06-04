@@ -20,6 +20,8 @@ import view.View;
  */
 
 public class ViewTest {
+	
+	View tester = new View();
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {

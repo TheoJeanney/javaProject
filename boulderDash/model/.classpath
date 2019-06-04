@@ -45,22 +45,6 @@
 	<classpathentry kind="lib" path="C:/Users/Thomas/.m2/repository/junit/junit/4.12/junit-4.12.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Thomas/.m2/repository/mysql/mysql-connector-java/5.1.39/mysql-connector-java-5.1.39-sources.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Thomas/.m2/repository/mysql/mysql-connector-java/5.1.39/mysql-connector-java-8.0.11.jar"/>
-	<classpathentry kind="src" path="target/generated-sources/annotations">
-		<attributes>
-			<attribute name="optional" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="ignore_optional_problems" value="true"/>
-			<attribute name="m2e-apt" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" output="target/test-classes" path="target/generated-test-sources/test-annotations">
-		<attributes>
-			<attribute name="optional" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="ignore_optional_problems" value="true"/>
-			<attribute name="m2e-apt" value="true"/>
-			<attribute name="test" value="true"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="src" path="/controller"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
